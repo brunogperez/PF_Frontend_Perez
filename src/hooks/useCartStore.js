@@ -17,8 +17,8 @@ export const useCartStore = () => {
       return
     }
     return Swal.fire({
-      title: 'Uhh ocurrio un error al obtener los productos',
-      html: 'Por favor intenta mas tarte',
+      title: 'Ocurrió un error al obtener los productos',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
@@ -32,8 +32,8 @@ export const useCartStore = () => {
       return
     }
     return Swal.fire({
-      title: 'Uhh ocurrio un error al obtener los productos',
-      html: 'Por favor intenta mas tarte',
+      title: 'Ocurrió un error al obtener los productos',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
@@ -48,8 +48,8 @@ export const useCartStore = () => {
       return
     }
     return Swal.fire({
-      title: 'Uhh ocurrio un error al obtener los productos',
-      html: 'Por favor intenta mas tarte',
+      title: 'Ocurrió un error al obtener los productos',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
@@ -61,21 +61,22 @@ export const useCartStore = () => {
       return
     }
     return Swal.fire({
-      title: 'Uhh ocurrio un error al obtener los productos',
-      html: 'Por favor intenta mas tarte',
+      title: 'Ocurrió un error al obtener los productos',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
 
   const startConfirmarCompra = async () => {
-    const resp = await confirmarCompra(cart._id)
+
+    const resp = await confirmarCompra()
     if (resp.ok) {
       startGetCartById(cart._id)
       return
     }
     return Swal.fire({
-      title: 'Uhh ocurrio un error al obtener los productos',
-      html: 'Por favor intenta mas tarte',
+      title: 'Ocurrió un error al obtener los productos',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }

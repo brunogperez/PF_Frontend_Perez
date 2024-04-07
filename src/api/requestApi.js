@@ -77,14 +77,27 @@ export const resetPass = async (password, token) => {
   }
 }
 
+export const deleteUser = async (_id) => {
+  try {
+    const { data } = await ecommerceApi.post(`/session/delete-user/${_id}`)
+
+    return { ok: true, data }
+
+  } catch (error) {
+    console.log(error)
+    return { ok: false, msg: error.response.data.msg }
+  }
+}
+
+
 export const deleteInactiveUsers = async () => {
   try {
-    const { data } = await ecommerceApi.post('/session/delete-users')
+    const { data } = await ecommerceApi.post(`/session/delete-users`)
     console.log(data)
 
-    return {ok: true , data}
+    return { ok: true, data }
 
-} catch (error) {
+  } catch (error) {
     console.log(error)
     return { ok: false, msg: error.response.data.msg }
   }
@@ -157,12 +170,12 @@ export const updateProduct = async (id, values) => {
 
 export const getCartById = async (id) => {
   try {
-    const { data } = await ecommerceApi.get(`/carts/${id}`);
+    const { data } = await ecommerceApi.get(`/carts/${id}`)
 
     return { ok: true, cart: data.cart }
   } catch (error) {
-    console.log(error);
-    return { ok: false };
+    console.log(error)
+    return { ok: false }
   }
 }
 
@@ -174,8 +187,8 @@ export const addProductInCart = async (idCart, idProduct) => {
     return { ok: true, cart: data.cart }
 
   } catch (error) {
-    console.log({ error });
-    return { ok: false, msg: error.response.data.msg };
+    console.log({ error })
+    return { ok: false, msg: error.response.data.msg }
   }
 }
 
@@ -187,28 +200,31 @@ export const removeProductInCart = async (idCart, idProduct, quantity) => {
     return { ok: true, cart: data.cart }
 
   } catch (error) {
-    console.log({ error });
-    return { ok: false, msg: error.response.data.msg };
+    console.log({ error })
+    return { ok: false, msg: error.response.data.msg }
   }
 }
 
 export const deleteProductInCart = async (idCart, idProduct) => {
   try {
-    const { data } = await ecommerceApi.delete(`/carts/${idCart}/product/${idProduct}`);
-    return { ok: true, cart: data.cart };
+    const { data } = await ecommerceApi.delete(`/carts/${idCart}/product/${idProduct}`)
+    return { ok: true, cart: data.cart }
   } catch (error) {
-    console.log({ error });
-    return { ok: false, msg: error.response.data.msg };
+    console.log({ error })
+    return { ok: false, msg: error.response.data.msg }
   }
 }
 
-export const confirmarCompra = async (idCart) => {
+export const confirmarCompra = async () => {
   try {
-    const { data } = await ecommerceApi.post(`/carts/${idCart}/purchase`);
-    return { ok: true };
+    const { data } = await ecommerceApi.get('/session/renew')
+    const { token, user } = data
+    const { cart_id } = user
+    const { result } = await ecommerceApi.post(`/carts/${cart_id}/purchase`)
+    return { ok: true, result }
   } catch (error) {
-    console.log({ error });
-    return { ok: false, msg: error.response.data.msg };
+    console.log({ error })
+    return { ok: false, msg: error.response.data.msg }
   }
 }
 
@@ -223,6 +239,34 @@ export const getTickets = async () => {
 
   } catch (error) {
     console.log(error)
+    return { ok: false }
+  }
+}
+
+//MERCADO PAGO
+
+export const referenceId = async (idCart) => {
+  try {
+    const { data } = await ecommerceApi.post(`/carts/create-preference/${idCart}`)
+    console.log({ data })
+    return { ok: true, idPreference: data.idPreference }
+  } catch (error) {
+    console.log({ error })
+    return { ok: false, msg: error.response.data.msg }
+  }
+}
+
+//CHAT
+
+export const getMessages = async () => {
+  try {
+    const { data } = await ecommerceApi.get('/chat')
+    const { messages } = data
+    console.log(data)
+    return { ok: true, messages }
+
+  } catch (error) {
+    console.log({ error })
     return { ok: false }
   }
 }

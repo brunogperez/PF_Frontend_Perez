@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-import { deleteInactiveUsers, getUsers, loginUser, registerUser, resetPass, sendEmailResetPass, validarToken } from '../api/requestApi'
+import { deleteInactiveUsers, deleteUser, getUsers, loginUser, registerUser, resetPass, sendEmailResetPass, validarToken } from '../api/requestApi'
 import { onGetUsers, onLogin, onLogout } from '../store/authSlice'
 import { useCartStore } from './useCartStore'
 import { useTicketStore } from './useTicketStore'
@@ -34,7 +34,7 @@ export const useAuthStore = () => {
     }
     return Swal.fire({
       title: 'Ha ocurrido un error',
-      html: resp.msg,
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
@@ -47,7 +47,7 @@ export const useAuthStore = () => {
     }
     return Swal.fire({
       title: 'Ha ocurrido un error',
-      html: resp.msg,
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     })
   }
@@ -79,8 +79,8 @@ export const useAuthStore = () => {
     }
 
     Swal.fire({
-      title: 'Uhh ocurrio un error',
-      html: resp.msg,
+      title: 'Ocurrió un error',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     });
 
@@ -98,8 +98,8 @@ export const useAuthStore = () => {
     }
 
     return Swal.fire({
-      title: 'Uhh ocurrio un error',
-      html: resp.msg,
+      title: 'Ocurrió un error',
+      html: 'Por favor, intenta nuevamente',
       icon: 'error',
     });
   }
@@ -107,8 +107,6 @@ export const useAuthStore = () => {
   const startGetUsers = async () => {
 
     const { users } = await getUsers()
-
-
     if (users) {
       dispatch(onGetUsers(users))
       return
@@ -120,17 +118,41 @@ export const useAuthStore = () => {
     })
   }
 
-  const startDeleteInactive = async () => {
-    const { users } = await deleteInactiveUsers()
+  const startDeleteUser = async (id) => {
+    const { data } = await deleteUser(id)
+    const { users } = await getUsers()
     if (users) {
       dispatch(onGetUsers(users))
-      return
+      return Swal.fire({
+        title: 'Proceso exitoso',
+        html: 'Usuario eliminado!',
+        icon: 'success',
+      })
     }
-    /*     return Swal.fire({
-          title: 'Ocurrio un error al obtener los usuarios',
-          html: 'Por favor intentarlo mas tarde',
-          icon: 'error',
-        }) */
+    return Swal.fire({
+      title: 'Ocurrio un error al obtener los usuarios',
+      html: 'Por favor intentarlo mas tarde',
+      icon: 'error',
+    })
+
+  }
+
+  const startDeleteInactive = async () => {
+    const { data } = await deleteInactiveUsers()
+    const { users } = await getUsers()
+    if (users) {
+      dispatch(onGetUsers(users))
+      return Swal.fire({
+        title: 'Proceso exitoso',
+        html: 'Usuarios eliminados!',
+        icon: 'success',
+      })
+    }
+    return Swal.fire({
+      title: 'Ocurrio un error al obtener los usuarios',
+      html: 'Por favor intentarlo mas tarde',
+      icon: 'error',
+    })
 
   }
 
@@ -152,6 +174,7 @@ export const useAuthStore = () => {
     startSendEmailResetPass,
     startResetPass,
     startGetUsers,
-    startDeleteInactive
+    startDeleteInactive,
+    startDeleteUser
   }
 }

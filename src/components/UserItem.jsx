@@ -5,8 +5,17 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import DeleteIcon from '@mui/icons-material/Delete'
+import { useAuthStore } from '../hooks/useAuthStore';
 
-export const UserItem = ({ first_name, last_name, role }) => {
+export const UserItem = ({ _id, first_name, last_name, role}) => {
+
+
+  const { startDeleteUser } = useAuthStore()
+
+  const onDeleteUser = async() => {
+    await startDeleteUser(_id)
+  }
+
   return (
     <Card sx={{ minWidth: '60vh' }}>
       <CardContent>
@@ -19,9 +28,9 @@ export const UserItem = ({ first_name, last_name, role }) => {
         </Typography>
       </CardContent>
       <CardActions>
-      <Button variant="outlined"  startIcon={<DeleteIcon />}>
-        Eliminar usuario
-      </Button>
+        <Button variant="outlined" onClick={onDeleteUser} startIcon={<DeleteIcon />}>
+          Eliminar usuario
+        </Button>
       </CardActions>
     </Card>
 

@@ -20,7 +20,7 @@ export const useProductStore = () => {
         }
 
         return Swal.fire({
-            title: 'Uhh ocurrio un error al obtener los productos',
+            title: 'Ocurrió un error al obtener los productos',
             html: 'Por favor, intenta nuevamente',
             icon: 'error',
         })
@@ -35,8 +35,8 @@ export const useProductStore = () => {
         };
 
         return Swal.fire({
-            title: 'Uhh ocurrio un error al obtener los productos',
-            html: 'Por favor intenta mas tarte',
+            title: 'Ocurrió un error al obtener los productos',
+            html: 'Por favor, intenta nuevamente',
             icon: 'error',
         });
     }
@@ -52,8 +52,8 @@ export const useProductStore = () => {
         if (resp.ok) return startProductActivo(resp.producto)
 
         Swal.fire({
-            title: 'Uhh ocurrio un error al crear el producto',
-            html: resp.msg,
+            title: 'Ocurrió un error al crear el producto',
+            html: 'Por favor, intenta nuevamente',
             icon: 'error',
         })
 
@@ -66,8 +66,8 @@ export const useProductStore = () => {
         if (resp.ok) return dispatch(onDeleteProduct(idProduct))
 
         Swal.fire({
-            title: 'Uhh ocurrio un error al eliminar el producto',
-            html: resp.msg,
+            title: 'Ocurrió un error al eliminar el producto',
+            html: 'Por favor, intenta nuevamente',
             icon: 'error',
         })
 
@@ -86,8 +86,8 @@ export const useProductStore = () => {
         }
 
         Swal.fire({
-            title: 'Uhh ocurrio un error al actualizar el producto',
-            html: resp.msg,
+            title: 'Ocurrió un error al actualizar el producto',
+            html: 'Por favor, intenta nuevamente',
             icon: 'error',
         })
     }

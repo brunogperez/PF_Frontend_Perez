@@ -22,6 +22,10 @@ export const NavBar = () => {
         <NavLink to='/'>
           <Avatar alt='logo' src='logo-digital-age.webp' sx={{ width: 130, height: 70 }} />
         </NavLink>
+        {
+          status === 'authenticated' &&
+          <NavLink to='/chat' className='navbar-brand' style={{ marginLeft: '20px',marginRight: '20px', color: 'white' }}>CHAT</NavLink>
+        }
         <div>
           {
             isAdmin &&
@@ -48,20 +52,22 @@ export const NavBar = () => {
         {
           status === 'authenticated'
             ?
+
             <>
+
               <NavLink
                 className='navbar-brand'
-                style={{ marginRight: '15px', color: 'white' }}>{first_name}
+                style={{ marginRight: '40px', color: 'white' }}>{first_name}
               </NavLink>
               <NavLink
-                    to={`${status === 'not-authenticated' ? '/session/login' : '/mis-compras'}`}
-                    className='navbar-brand'
-                    style={{ marginRight: '15px', color: 'white' }}>Mis compras</NavLink>
+                to={`${status === 'not-authenticated' ? '/session/login' : '/mis-compras'}`}
+                className='navbar-brand'
+                style={{ marginRight: '15px', color: 'white' }}>Mis compras</NavLink>
               <NavLink
                 to={`${status === 'not-authenticated' ? '/session/login' : '/mi-carrito'}`}
                 className='navbar-brand'
                 style={{ marginRight: '10px', color: 'white' }}>
-                  <Badge badgeContent={cart?.products.length} color="primary"></Badge>
+                <Badge badgeContent={cart?.products.length} color="primary"></Badge>
                 <LocalGroceryStoreOutlinedIcon />
               </NavLink>
               <Button size="small" onClick={onLogout}>Cerrar sesión</Button>

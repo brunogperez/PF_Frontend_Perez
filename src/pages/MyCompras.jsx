@@ -1,15 +1,26 @@
 import { useEffect } from 'react'
-import { Button, Typography } from '@mui/material'
+import { Button, Card, CardActionArea, CardContent, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useTicketStore } from '../hooks/useTicketStore'
+import { useAuthStore } from '../hooks/useAuthStore'
 
 export const MyCompras = () => {
+
+  const { isAdmin } = useAuthStore()
 
   const { tickets, startGetTickets } = useTicketStore()
 
   useEffect(() => {
     startGetTickets()
   }, [])
+
+  if (isAdmin) {
+    return (
+      <>
+        <Typography variant="h4" style={{ marginTop: '45vh', marginLeft: '33vw' }}>El administrador no posee esta función</Typography>
+      </>
+    )
+  }
 
   if (!tickets) {
     return (
@@ -41,23 +52,33 @@ export const MyCompras = () => {
       {
         tickets.length > 0 &&
         <>
-          <div style={{ margin: 'auto' }}>
-            <Typography variant='h4'>Historial de Compras</Typography>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', marginBottom: '5px' }}>
+            <Typography variant='h3' >Historial de Compras</Typography>
           </div>
           {tickets.map((ticket) => (
-            <div key={ticket._id} style={{ border: '1px solid #ccc', padding: '20px', marginTop: '20px' }}>
-              <Typography variant='h5'>Código: {ticket.code}</Typography>
-              <Typography variant='body1'>Fecha de compra: {new Date(ticket.purchase_datetime).toLocaleString()}</Typography>
-              <Typography variant='body1'>Monto total: ${ticket.amount.toFixed(2)}</Typography>
-              <Typography variant='body1'>Correo de compra: {ticket.purchase}</Typography>
-              <Typography variant='h6'>Items:</Typography>
-              {ticket.items.map((item, index) => (
-                <div key={index}>
-                  <Typography variant='body2'>{item.title} - Cantidad: {item.quantity} - Precio unitario: ${item.price.toFixed(2)} - Total: ${item.total.toFixed(2)}</Typography>
-                </div>
-              ))}
+            <div key={ticket._id} style={{ border: '5px solid #ccc', padding: '20px', marginTop: '20px' }}>
+              <Card sx={{ maxWidth: '70%' }} style={{ margin: 'auto'}}>
+                <CardActionArea>
+                  <CardContent>
+                    <Typography variant='h5'>Código: {ticket.code}</Typography>
+                    <Typography variant='body1'>Fecha de compra: {new Date(ticket.purchase_datetime).toLocaleString()}</Typography>
+                    <Typography variant='body1'>Monto total: ${ticket.amount.toFixed(2)}</Typography>
+                    <Typography variant='body1'>Correo de compra: {ticket.purchase}</Typography>
+                    <Typography variant='h6'>Items:</Typography>
+                    {ticket.items.map((item, index) => (
+                      <div key={index}>
+                        <Typography variant='body2'>{item.title} - Cantidad: {item.quantity} - Precio unitario: ${item.price.toFixed(2)} - Total: ${item.total.toFixed(2)}</Typography>
+                      </div>
+                    ))}
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </div>
           ))}
+
+
+
+
         </>
       }
     </>

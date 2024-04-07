@@ -1,9 +1,14 @@
 import axios from 'axios'
+import { getVarEnv } from '../helpers/getVarEnv'
+
+const { VITE_URL_API } = getVarEnv()
+
+
+const ecommerceURL = VITE_URL_API
 
 const ecommerceApi = axios.create({
-    //baseURL: 'https://pfbackendperez.onrender.com/api'
-    baseURL: 'http://127.0.0.1:8080/api'
-});
+    baseURL: ecommerceURL
+})
 
 ecommerceApi.interceptors.request.use(config=>{
     config.headers = {

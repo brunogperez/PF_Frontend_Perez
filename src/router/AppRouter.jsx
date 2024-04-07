@@ -15,6 +15,8 @@ import { EditProductPage } from '../pages/EditProductPage'
 import { MyCompras } from '../pages/MyCompras'
 import { ResetPasswordEmailPage } from '../pages/ResetPasswordEmailPage'
 import { ResetPasswordPage } from '../pages/ResetPasswordPage'
+import { Chat } from '../components/Chat'
+
 
 export const AppRouter = () => {
 
@@ -44,8 +46,10 @@ export const AppRouter = () => {
           :
           (
             <>
+              <Route path='/chat' element={<Chat />} />
               <Route path='/mis-compras' element={<MyCompras />} />
               <Route path='/mi-carrito' element={<MyCartPage />} />
+              
 
               {
                 isAdmin &&

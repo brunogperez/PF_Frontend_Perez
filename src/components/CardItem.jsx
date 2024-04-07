@@ -13,14 +13,14 @@ export const CardItem = (product) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 300, boxShadow: 1, borderRadius: 2 }} onClick={onClickCard}>
+    <Card sx={{ maxWidth: 300, minHeight: 400, boxShadow: 1, borderRadius: 2 }} onClick={onClickCard}>
       <CardHeader />
       <CardMedia
         component='img'
         height='200'
         image={product.thumbnail}
         alt={product.title}
-        style={{ objectFit: 'contain', borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+        style={{ objectFit: 'contain', borderRadius: '20px' }}
       />
 
       <CardContent>
