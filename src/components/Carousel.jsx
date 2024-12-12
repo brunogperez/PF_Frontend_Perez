@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { getVarEnv } from '../helpers/getVarEnv';
 
 
 
@@ -20,6 +21,8 @@ const variants = {
 
 export const Carousel = () => {
 
+
+    const { API_URL_FRONT } = getVarEnv()
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -50,7 +53,7 @@ export const Carousel = () => {
                 transition={{ duration: 0.5 }}
             >
                 <img
-                    src={images[currentIndex]}
+                    src={`${API_URL_FRONT}${images[currentIndex]}`}
                     alt="Imagen del carrusel"
                     style={{ height: 400, margin: 'auto', objectFit: 'contain', borderRadius: 30, marginBlock: 30 }}
                 />
