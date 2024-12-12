@@ -15,7 +15,7 @@ export const UsersPage = () => {
 
   useEffect(() => {
     startGetUsers()
-  }, [])
+  }, [startGetUsers])
 
 
   return (

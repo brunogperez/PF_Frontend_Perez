@@ -67,17 +67,14 @@ export const NavBar = () => {
                 to={`${status === 'not-authenticated' ? '/session/login' : '/mi-carrito'}`}
                 className='navbar-brand'
                 style={{ marginRight: '10px', color: 'white' }}>
-                <Badge badgeContent={cart?.products.length} color="primary"></Badge>
+                <Badge badgeContent={cart?.products.length} color="warning" sx={{left:25, bottom:10}}></Badge>
                 <LocalGroceryStoreOutlinedIcon />
               </NavLink>
               <Button size="small" onClick={onLogout}>Cerrar sesión</Button>
             </>
             :
             <>
-              <NavLink
-                to='/session/register'
-                className='navbar-brand'
-                style={{ marginRight: '15px', color: 'white' }}>Crear cuenta</NavLink>
+              
               <NavLink
                 to='/session/login'
                 className='navbar-brand'

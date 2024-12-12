@@ -3,7 +3,6 @@ import { CardItemCart } from "../components/CardItemCart"
 import { useCartStore } from "../hooks/useCartStore"
 import { Button, Typography } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
-
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import { useAuthStore } from "../hooks/useAuthStore"
 import { referenceId } from "../api/requestApi"
@@ -12,7 +11,6 @@ import { getVarEnv } from "../helpers/getVarEnv"
 
 const { VITE_PUBLIC_KEY_MERCADO_PAGO } = getVarEnv()
 
-const { status } = queryString.parse(location.search)
 
 export const MyCartPage = () => {
 
@@ -83,7 +81,13 @@ export const MyCartPage = () => {
       {
         cart.products.length > 0 &&
         cart.products.map((product) => (
-          <div key={product.id._id} style={{ marginLeft: '30%' }}>
+          <div key={product.id._id} style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginBlock: 30,   // Ocupa todo el alto de la pantalla
+            width: '100%'
+          }}>
             <CardItemCart  {...product} />
           </div>
         ))
@@ -95,7 +99,7 @@ export const MyCartPage = () => {
             <Typography variant="h5"  ><strong>Total: </strong> ${total.toFixed(2)}</Typography>
             {
               !preferenceId &&
-              <Button variant="contained" color="success" onClick={idReference}>
+              <Button variant="contained" color="primary" onClick={idReference}>
                 <Typography sx={{ color: 'white' }}>Confirmar compra</Typography>
               </Button>
             }

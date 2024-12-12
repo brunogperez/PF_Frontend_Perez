@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCartStore } from '../hooks/useCartStore'
 import { Button, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 import { useAuthStore } from '../hooks/useAuthStore'
 
 
-export const SuccessPage = (req, res) => {
+export const SuccessPage = () => {
 
   const { } = useAuthStore()
   const {cart, startConfirmarCompra, startGetCartById } = useCartStore()

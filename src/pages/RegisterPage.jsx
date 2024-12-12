@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -42,9 +42,9 @@ export const RegisterPage = () => {
       direction='column'
       alignItems='center'
       justifyContent='center'
-      sx={{ minHeight: '100vh', backgroundColor: '#4FB477' }}
+      sx={{ minHeight: '100vh' }}
     >
-      <Grid item sx={{ width: 450, backgroundColor: '#dcfffd', borderRadius: 2, padding: 3 }}>
+      <Grid item sx={{ width: 500,height:450, backgroundColor: 'white', borderRadius: 2, padding: 3, alignContent:'center' }}>
 
         <Typography variant='h4'>Registro</Typography>
 
@@ -116,7 +116,7 @@ export const RegisterPage = () => {
           <Grid item mt={3} xs={12}>
             <Button
               disabled={disabled}
-              color="success"
+              color="primary"
               onClick={onSubmitForm}
               variant="contained"
               fullWidth

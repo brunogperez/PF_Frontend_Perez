@@ -1,37 +1,33 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete'
 import { useAuthStore } from '../hooks/useAuthStore';
+import { Box, CardContent, Typography, Button, Card } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-export const UserItem = ({ _id, first_name, last_name, role}) => {
-
+export const UserItem = ({ _id, first_name, last_name, role }) => {
 
   const { startDeleteUser } = useAuthStore()
 
-  const onDeleteUser = async() => {
+  const onDeleteUser = async () => {
     await startDeleteUser(_id)
   }
 
   return (
-    <Card sx={{ minWidth: '60vh' }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-          {first_name} {last_name}
-        </Typography>
-        <Typography variant="body2">
-          Rol:{role}
-          <br />
-        </Typography>
+    <Card sx={{ minWidth: 345, borderRadius: '30px', padding: 2 }}>
+      <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ flexDirection: 'row' }}>
+          <Typography sx={{ fontSize: 20 }} gutterBottom>
+            {first_name} {last_name}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Rol:{role}
+          </Typography>
+        </Box>
+        <Box>
+          <Button onClick={onDeleteUser} sx={{ alignContent: 'center' }} >
+            <DeleteIcon color='red' />
+          </Button>
+        </Box>
       </CardContent>
-      <CardActions>
-        <Button variant="outlined" onClick={onDeleteUser} startIcon={<DeleteIcon />}>
-          Eliminar usuario
-        </Button>
-      </CardActions>
+
     </Card>
 
   )
