@@ -21,14 +21,12 @@ const variants = {
 
 export const Carousel = () => {
 
-
-    const { API_URL_FRONT } = getVarEnv()
+    const { VITE_API_URL_FRONT } = getVarEnv()
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleNext = () => {
         setTimeout(() => {
-
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
         }, 1000);
     };
@@ -38,8 +36,7 @@ export const Carousel = () => {
     };
 
     useEffect(() => {
-        const intervalId = setInterval(handleNext, 3000); 
-
+        const intervalId = setInterval(handleNext, 3000);
         return () => clearInterval(intervalId);
     }, []);
 
@@ -53,7 +50,7 @@ export const Carousel = () => {
                 transition={{ duration: 0.5 }}
             >
                 <img
-                    src={`${API_URL_FRONT}${images[currentIndex]}`}
+                    src={`${VITE_API_URL_FRONT}${images[currentIndex]}`}
                     alt="Imagen del carrusel"
                     style={{ height: 400, margin: 'auto', objectFit: 'contain', borderRadius: 30, marginBlock: 30 }}
                 />
