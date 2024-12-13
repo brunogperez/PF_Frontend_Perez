@@ -9,9 +9,9 @@ import { getVarEnv } from '../helpers/getVarEnv';
 
 
 const images = [
-    'public/slide1.webp',
-    'public/slide2.webp',
-    'public/slide3.webp',
+    'https://res.cloudinary.com/divujqlv8/image/upload/v1734112332/slide3_lv3b1d.webp',
+    'https://res.cloudinary.com/divujqlv8/image/upload/v1734112332/slide1_ynoj7q.webp',
+    'https://res.cloudinary.com/divujqlv8/image/upload/v1734112332/slide2_qenoqm.webp',
 ];
 
 const variants = {
@@ -50,7 +50,7 @@ export const Carousel = () => {
                 transition={{ duration: 0.5 }}
             >
                 <img
-                    src={`${VITE_API_URL_FRONT}${images[currentIndex]}`}
+                    src={`${images[currentIndex]}`}
                     alt="Imagen del carrusel"
                     style={{ height: 400, margin: 'auto', objectFit: 'contain', borderRadius: 30, marginBlock: 30 }}
                 />
