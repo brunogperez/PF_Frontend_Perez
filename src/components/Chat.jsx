@@ -81,7 +81,7 @@ import { useMessageStore } from '../hooks/useMessageStore'
 
 
 const { VITE_SOCKET_URL_API } = getVarEnv()
-const socket = io(VITE_SOCKET_URL_API);
+const socket = io(VITE_SOCKET_URL_API, { transports: ['websocket'] });
 
 
 export const Chat = () => {
