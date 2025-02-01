@@ -12,7 +12,7 @@ export const SuccessPage = () => {
 
   useEffect(() => {
     startGetCartById()
-    console.log(cart)
+
   }, [])
 
 

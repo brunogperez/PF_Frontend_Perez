@@ -36,7 +36,7 @@ export const AdminProductPage = () => {
   }
 
   const editProduct = (product) => {
-    console.log({ product })
+
     startProductActivo({ ...product })
     navigate(`/admin-product/edit/${product._id}`)
   }

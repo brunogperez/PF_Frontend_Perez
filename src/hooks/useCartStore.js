@@ -42,7 +42,7 @@ export const useCartStore = () => {
     const p = cart.products.find(p => p.id._id == idProduct)
     const quantity = p.quantity - 1
     const resp = await removeProductInCart(cart._id, idProduct, quantity)
-    console.log({ resp })
+
     if (resp.ok) {
       dispatch(onCart(resp.cart))
       return

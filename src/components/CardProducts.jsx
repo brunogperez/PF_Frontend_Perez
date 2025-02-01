@@ -20,7 +20,7 @@ export const CardProducts = () => {
       .catch(() => setLoading(false));
   }, [currentPage])
 
-  console.log(currentPage)
+
 
   const goToPage = (page) => {
     setCurrentPage(page)

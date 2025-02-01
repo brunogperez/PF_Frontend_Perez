@@ -277,7 +277,7 @@ export const referenceId = async (idCart) => {
     const { data } = await ecommerceApi.post(
       `/carts/create-preference/${idCart}`
     );
-    console.log({ data });
+    
     return { ok: true, idPreference: data.idPreference };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
