@@ -3,6 +3,8 @@ import { authSlice } from './authSlice'
 import { productSlice } from './productSlice'
 import { cartSlice } from './cartSlice'
 import { ticketSlice } from './ticketSlice'
+import { messageSlice } from './messageSlice'
+
 
 
 export const store = configureStore({
@@ -11,7 +13,7 @@ export const store = configureStore({
         product: productSlice.reducer,
         cart: cartSlice.reducer,
         ticket: ticketSlice.reducer,
-        // ticketSlice
+        messages: messageSlice.reducer,
     },
-    devTools: process.env.NODE_ENV !== 'production',
+    
 })

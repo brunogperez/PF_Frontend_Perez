@@ -6,6 +6,7 @@ import { LoadingComponent } from './LoadingComponent'
 import { Carousel } from '../components/Carousel.jsx'
 import { Footer } from '../components/Footer.jsx'
 
+
 export const CardProducts = () => {
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -13,11 +14,17 @@ export const CardProducts = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    startGetProducts(currentPage).then(() => setLoading(false))
+
+    startGetProducts(currentPage)
+      .then(() => setLoading(false))
+      .catch(() => setLoading(false));
   }, [currentPage])
+
+  console.log(currentPage)
 
   const goToPage = (page) => {
     setCurrentPage(page)
+    setLoading(false)
   }
 
 
@@ -71,4 +78,5 @@ export const CardProducts = () => {
     </>
   )
 }
+
 

@@ -9,9 +9,9 @@ import Swal from 'sweetalert2'
 
 
 export const AddProductPage = () => {
+
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
 
   const initialValues = {
     title: '',
@@ -60,7 +60,7 @@ export const AddProductPage = () => {
 
       if (success) {
         setLoading(false)
-        setShowMessage(true)
+
         Swal.fire({
           title: 'Producto agregado con exito',
           icon: 'success',
@@ -68,12 +68,15 @@ export const AddProductPage = () => {
         navigate('/admin-product')
       } else {
         setLoading(false)
-        setShowMessage(false)
+        Swal.fire({
+          title: 'Error al agregar el producto',
+          icon: 'error',
+        })
       }
     } catch (error) {
-      console.log(error)
+
       setLoading(false)
-      setShowMessage(false)
+
     }
   }
 
@@ -94,22 +97,20 @@ export const AddProductPage = () => {
         container
         spacing={0}
         direction='column'
-        alignItems='center'
-        sx={{ minHeight: '100vh', backgroundColor: '#e7ebda' }}
+        sx={{ height: '90vh', backgroundColor: 'white', alignContent: 'center', justifyContent: 'center' }}
       >
 
-        <Grid item sx={{ width: 450, backgroundColor: 'white', borderRadius: 2, padding: 3, mt: 3 }}>
+        <Grid item sx={{ width: 450, backgroundColor: 'lightgrey', borderRadius: 2, padding: 3, mt: 3 }}>
 
           <Typography variant='h5'>Crear Producto</Typography>
 
           <Grid container>
-
             <Grid item mt={2} xs={12}>
               <TextField
                 name='title'
                 value={title}
-                label='Titutlo'
-                variant='outlined'
+                label='Titulo'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -123,7 +124,7 @@ export const AddProductPage = () => {
                 name='description'
                 value={description}
                 label='Descripcion'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -137,7 +138,7 @@ export const AddProductPage = () => {
                 name='code'
                 value={code}
                 label='Codigo'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -152,7 +153,7 @@ export const AddProductPage = () => {
                 name='price'
                 value={price}
                 label='Precio'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -167,7 +168,7 @@ export const AddProductPage = () => {
                 name='stock'
                 value={stock}
                 label='Stock'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -181,7 +182,7 @@ export const AddProductPage = () => {
                 name='category'
                 value={category}
                 label='Categoria'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={handleChange}
@@ -195,7 +196,7 @@ export const AddProductPage = () => {
                 type='file'
                 name='file'
                 label='Imagen'
-                variant='outlined'
+                variant='filled'
                 size='small'
                 fullWidth
                 onChange={onFileChange}

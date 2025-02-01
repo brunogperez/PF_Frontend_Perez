@@ -1,15 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux'
-import Swal from 'sweetalert2'
-import { deleteInactiveUsers, deleteUser, getUsers, loginUser, registerUser, resetPass, sendEmailResetPass, validarToken } from '../api/requestApi'
-import { onGetUsers, onLogin, onLogout } from '../store/authSlice'
-import { useCartStore } from './useCartStore'
-import { useTicketStore } from './useTicketStore'
-
-
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import {
+  deleteInactiveUsers,
+  deleteUser,
+  getUsers,
+  loginUser,
+  registerUser,
+  resetPass,
+  sendEmailResetPass,
+  validarToken,
+} from "../api/requestApi";
+import { onGetUsers, onLogin, onLogout } from "../store/authSlice";
+import { useCartStore } from "./useCartStore";
 
 export const useAuthStore = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     users,
     _id,
@@ -20,141 +25,137 @@ export const useAuthStore = () => {
     cart_id,
     status,
     isAdmin,
-  } = useSelector(state => state.auth)
+  } = useSelector((state) => state.auth);
 
-  const { startGetCartById } = useCartStore()
-  const { startGetTickets } = useTicketStore()
+  const { startGetCartById } = useCartStore();
 
   const startLogin = async (email, password) => {
-    const resp = await loginUser(email, password)
+    const resp = await loginUser(email, password);
     if (resp.ok) {
-      const { _id, cart_id, last_name, first_name, role } = resp
-      startGetCartById(cart_id)
-      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }))
+      const { _id, cart_id, last_name, first_name, role } = resp;
+      startGetCartById(cart_id);
+      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
     }
     return Swal.fire({
-      title: 'Ha ocurrido un error',
-      html: 'Por favor, intenta nuevamente',
-      icon: 'error',
-    })
-  }
+      title: "Ha ocurrido un error",
+      html: "Por favor, intenta nuevamente",
+      icon: "error",
+    });
+  };
 
   const startRegister = async (email, password, first_name, last_name) => {
-    const resp = await registerUser(email, password, first_name, last_name)
+    const resp = await registerUser(email, password, first_name, last_name);
     if (resp.ok) {
-      const { _id, cart_id, last_name, first_name, role } = resp
-      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }))
+      const { _id, cart_id, last_name, first_name, role } = resp;
+      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
     }
     return Swal.fire({
-      title: 'Ha ocurrido un error',
-      html: 'Por favor, intenta nuevamente',
-      icon: 'error',
-    })
-  }
+      title: "Ha ocurrido un error",
+      html: "Por favor, intenta nuevamente",
+      icon: "error",
+    });
+  };
 
   const startLogout = async () => {
-    dispatch(onLogout())
-    localStorage.clear()
-  }
+    dispatch(onLogout());
+    localStorage.clear();
+  };
 
   const startCheckingLogin = async () => {
-    const resp = await validarToken()
+    const resp = await validarToken();
     if (resp.ok) {
-      const { _id, cart_id, last_name, first_name, role } = resp
-      startGetCartById(cart_id)
-      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }))
+      const { _id, cart_id, last_name, first_name, role } = resp;
+      startGetCartById(cart_id);
+      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
     }
-    startLogout()
-  }
+    startLogout();
+  };
 
   const startResetPass = async (password, token) => {
     const resp = await resetPass(password, token);
     if (resp.ok) {
       Swal.fire({
-        title: 'Contraseña reseteada',
-        html: 'Tu contraseña fue cambiada correctamente',
-        icon: 'success',
+        title: "Contraseña reseteada",
+        html: "Tu contraseña fue cambiada correctamente",
+        icon: "success",
       });
       return true;
     }
 
     Swal.fire({
-      title: 'Ocurrió un error',
-      html: 'Por favor, intenta nuevamente',
-      icon: 'error',
+      title: "Ocurrió un error",
+      html: "Por favor, intenta nuevamente",
+      icon: "error",
     });
 
     return false;
-  }
+  };
 
   const startSendEmailResetPass = async (email) => {
     const resp = await sendEmailResetPass(email);
     if (resp.ok) {
       return Swal.fire({
-        title: 'Email enviado',
-        html: 'Se te envio un email a tu casilla de correo para continuar el reset de tu contraseña',
-        icon: 'success',
+        title: "Email enviado",
+        html: "Se te envio un email a tu casilla de correo para continuar el reset de tu contraseña",
+        icon: "success",
       });
     }
 
     return Swal.fire({
-      title: 'Ocurrió un error',
-      html: 'Por favor, intenta nuevamente',
-      icon: 'error',
+      title: "Ocurrió un error",
+      html: "Por favor, intenta nuevamente",
+      icon: "error",
     });
-  }
+  };
 
   const startGetUsers = async () => {
-
-    const { users } = await getUsers()
+    const { users } = await getUsers();
     if (users) {
-      dispatch(onGetUsers(users))
-      return
+      dispatch(onGetUsers(users));
+      return;
     }
     return Swal.fire({
-      title: 'Ocurrio un error al obtener los usuarios',
-      html: 'Por favor intentarlo mas tarde',
-      icon: 'error',
-    })
-  }
+      title: "Ocurrio un error al obtener los usuarios",
+      html: "Por favor intentarlo mas tarde",
+      icon: "error",
+    });
+  };
 
   const startDeleteUser = async (id) => {
-    const { data } = await deleteUser(id)
-    const { users } = await getUsers()
-    if (users) {
-      dispatch(onGetUsers(users))
+    const { data } = await deleteUser(id);
+    const { users } = await getUsers();
+    if (users,data) {
+      dispatch(onGetUsers(users));
       return Swal.fire({
-        title: 'Proceso exitoso',
-        html: 'Usuario eliminado!',
-        icon: 'success',
-      })
+        title: "Proceso exitoso",
+        html: "Usuario eliminado!",
+        icon: "success",
+      });
     }
     return Swal.fire({
-      title: 'Ocurrio un error al obtener los usuarios',
-      html: 'Por favor intentarlo mas tarde',
-      icon: 'error',
-    })
-
-  }
+      title: "Ocurrio un error al obtener los usuarios",
+      html: "Por favor intentarlo mas tarde",
+      icon: "error",
+    });
+  };
 
   const startDeleteInactive = async () => {
-    const { data } = await deleteInactiveUsers()
-    const { users } = await getUsers()
-    if (users) {
-      dispatch(onGetUsers(users))
+    const { data } = await deleteInactiveUsers();
+    const { users } = await getUsers();
+    if (users, data) {
+      dispatch(onGetUsers(users));
       return Swal.fire({
-        title: 'Proceso exitoso',
-        html: 'Usuarios eliminados!',
-        icon: 'success',
-      })
+        title: "Proceso exitoso",
+        html: "Usuarios eliminados!",
+        icon: "success",
+      });
     }
     return Swal.fire({
-      title: 'Ocurrio un error al obtener los usuarios',
-      html: 'Por favor intentarlo mas tarde',
-      icon: 'error',
-    })
-
-  }
+      title: "Ocurrio un error al obtener los usuarios",
+      html: "Por favor intentarlo mas tarde",
+      icon: "error",
+    });
+  };
 
   return {
     users,
@@ -175,6 +176,6 @@ export const useAuthStore = () => {
     startResetPass,
     startGetUsers,
     startDeleteInactive,
-    startDeleteUser
-  }
-}
+    startDeleteUser,
+  };
+};

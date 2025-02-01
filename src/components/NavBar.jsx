@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button } from '@mui/material'
+import { Badge, Box, Button } from '@mui/material'
 import { NavLink } from 'react-router-dom'
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined'
 import { useAuthStore } from '../hooks/useAuthStore'
@@ -20,11 +20,19 @@ export const NavBar = () => {
     }}>
       <div style={{ display: 'flex', alignItems: 'center', margin: '5px', padding: '5px', marginLeft: '20px' }}>
         <NavLink to='/'>
-          <Avatar alt='logo' src='logo-digital-age.webp' sx={{ width: 130, height: 70 }} />
+          <Box
+            component="img"
+            sx={{
+              height: 75,
+              objectFit: "contain",
+            }}
+            alt='logo'
+            src='logo-digital-age.webp'
+          />
         </NavLink>
         {
           status === 'authenticated' &&
-          <NavLink to='/chat' className='navbar-brand' style={{ marginLeft: '20px',marginRight: '20px', color: 'white' }}>CHAT</NavLink>
+          <NavLink to='/chat' className='navbar-brand' style={{ marginLeft: '20px', marginRight: '20px', color: 'white' }}>CHAT</NavLink>
         }
         <div>
           {
@@ -67,14 +75,14 @@ export const NavBar = () => {
                 to={`${status === 'not-authenticated' ? '/session/login' : '/mi-carrito'}`}
                 className='navbar-brand'
                 style={{ marginRight: '10px', color: 'white' }}>
-                <Badge badgeContent={cart?.products.length} color="warning" sx={{left:25, bottom:10}}></Badge>
+                <Badge badgeContent={cart?.products.length} color="warning" sx={{ left: 25, bottom: 10 }}></Badge>
                 <LocalGroceryStoreOutlinedIcon />
               </NavLink>
               <Button size="small" onClick={onLogout}>Cerrar sesión</Button>
             </>
             :
             <>
-              
+
               <NavLink
                 to='/session/login'
                 className='navbar-brand'

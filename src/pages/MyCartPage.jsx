@@ -33,10 +33,9 @@ export const MyCartPage = () => {
       const result = await referenceId(cart._id)
       if (result.ok)
         setPreferenceId(result.idPreference)
-    } catch (error) {
-      console.log({ error })
-    }
+    } catch (error) { /* empty */ }
   }
+
 
   const confirmarCompra = async () => {
     setConfirmCompra(true)

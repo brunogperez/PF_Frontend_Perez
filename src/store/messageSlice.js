@@ -1,16 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 export const messageSlice = createSlice({
-  name: 'message',
+  name: "messages",
   initialState: {
-    messages: null,
+    messages: [],
   },
   reducers: {
     onMessages: (state, { payload }) => {
-      state.messages = payload
+      state.messages = payload;
+    },
+    addMessage: (state, { payload }) => {
+      state.messages = [payload, ...state.messages]; 
     },
   },
-})
+});
 
-
-export const { onMessages } = messageSlice.actions
+export const { onMessages, addMessage } = messageSlice.actions;

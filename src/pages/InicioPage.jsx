@@ -9,7 +9,7 @@ export const InicioPage = () => {
 
   useEffect(() => {
     startGetProducts()
-  },[startGetProducts])
+  },[])
   
   return <CardProducts/>
     

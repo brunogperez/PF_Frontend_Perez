@@ -14,7 +14,7 @@ export const LoginPage = () => {
 
   const validationSchema = Yup.object({
     email: Yup.string().required('El email es obligatorio').email('Email Invalido'),
-    password: Yup.string().required('El password es obligatorio').min(6, 'La password debe tener al menos 6 caracteres'),
+    password: Yup.string().required('La contraseña es obligatoria').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   })
 
   const { values, handleChange, errors } = useFormik({ initialValues, validationSchema });
@@ -26,7 +26,6 @@ export const LoginPage = () => {
 
   const onSubmitForm = () => {
     const isEmpty = Object.keys(errors).lenght === 0
-    console.log(isEmpty)
     if (isEmpty) return
     startLogin(email, password)
   }
