@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { Box, Fab, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Button } from '@mui/material'
-import AddIcon from '@mui/icons-material/Add'
+import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton } from '@mui/material'
+
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useProductStore } from '../hooks/useProductStore'
 import { LoadingComponent } from '../components/LoadingComponent'
+import { ButtonCustom } from '../components/ButtonCustom'
 
 
 export const AdminProductPage = () => {
@@ -46,14 +47,11 @@ export const AdminProductPage = () => {
       {loading ? (
         <LoadingComponent />
       ) : (
-        <Box>
-          <Box sx={{ '& > :not(style)': { m: 1 }, position: 'fixed', bottom: 10, right: 25 }}>
-            <Fab color="primary" aria-label="add" onClick={addProduct}>
-              <AddIcon />
-            </Fab>
-          </Box>
-          <TableContainer component={Paper}>
-            <Table>
+        <Box className='container items-center justify-center mx-auto mt-3' >
+          <ButtonCustom text={'Agregar producto'} onclick={addProduct}>
+          </ButtonCustom>
+          <TableContainer component={Paper} >
+            <Table className=''>
               <TableHead>
                 <TableRow>
                   <TableCell>Título</TableCell>
@@ -67,7 +65,7 @@ export const AdminProductPage = () => {
               </TableHead>
               <TableBody>
                 {products.map((product) => (
-                  <TableRow key={product._id}>
+                  <TableRow key={product._id} >
                     <TableCell>{product.title}</TableCell>
                     <TableCell>{product.description}</TableCell>
                     <TableCell>{product.code}</TableCell>
@@ -75,11 +73,11 @@ export const AdminProductPage = () => {
                     <TableCell>{product.stock}</TableCell>
                     <TableCell>{product.category}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => deleteProduct(product._id)}>
-                        <DeleteIcon />
-                      </IconButton>
                       <IconButton onClick={() => editProduct(product)}>
                         <EditIcon />
+                      </IconButton>
+                      <IconButton onClick={() => deleteProduct(product._id)}>
+                        <DeleteIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -88,18 +86,17 @@ export const AdminProductPage = () => {
             </Table>
           </TableContainer>
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+          <Box
+            className='flex justify-center mt-3'>
             {pagination && (
               <Box>
                 {Array.from({ length: pagination.totalPages }).map((_, index) => (
-                  <Button key={index + 1} onClick={() => goToPage(index + 1)}>
-                    {index + 1}
-                  </Button>
+                  <ButtonCustom key={index + 1} onclick={() => goToPage(index + 1)} text={index + 1} />
                 ))}
               </Box>
             )}
           </Box>
-        </Box>
+        </Box >
       )}
     </>
   )

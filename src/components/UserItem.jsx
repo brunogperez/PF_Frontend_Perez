@@ -2,9 +2,12 @@ import { useAuthStore } from '../hooks/useAuthStore';
 import { Box, CardContent, Typography, Button, Card } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export const UserItem = ({ _id, first_name, last_name, role }) => {
+
+export const UserItem = ({_id, first_name, last_name, role, email}) => {
 
   const { startDeleteUser } = useAuthStore()
+
+
 
   const onDeleteUser = async () => {
     await startDeleteUser(_id)
@@ -18,7 +21,10 @@ export const UserItem = ({ _id, first_name, last_name, role }) => {
             {first_name} {last_name}
           </Typography>
           <Typography variant="body2" color="text.secondary" gutterBottom>
-            Rol:{role}
+            Rol: {role}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" gutterBottom>
+            Email: {email}
           </Typography>
         </Box>
         <Box>

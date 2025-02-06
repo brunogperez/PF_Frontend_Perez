@@ -6,8 +6,6 @@ import { useCartStore } from '../hooks/useCartStore'
 export const CardItemCart = (product) => {
   const { _id, title, price, stock, thumbnail } = product.id
   const { quantity } = product
-
-
   const [cantidad, setCantidad] = useState(quantity)
   const { startAddProductInCart, startRemoveProductInCart, startDeleteProductInCart } = useCartStore()
 

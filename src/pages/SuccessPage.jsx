@@ -7,7 +7,7 @@ import { useAuthStore } from '../hooks/useAuthStore'
 
 export const SuccessPage = () => {
 
-  const { } = useAuthStore()
+  const { user } = useAuthStore()
   const {cart, startConfirmarCompra, startGetCartById } = useCartStore()
 
   useEffect(() => {
@@ -20,7 +20,6 @@ export const SuccessPage = () => {
   const [confirmCompra, setConfirmCompra] = useState(true)
 
   const confirmarCompra = async () => {
-    console.log('confirmar compra')
     setConfirmCompra(true)
     await startConfirmarCompra()
     setConfirmCompra(false)

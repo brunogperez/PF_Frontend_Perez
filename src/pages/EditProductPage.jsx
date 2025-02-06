@@ -8,12 +8,13 @@ import { LoadingComponent } from '../components/LoadingComponent';
 
 export const EditProductPage = () => {
 
-  const { startUpdateProduct } = useProductStore();
   const navigate = useNavigate();
+  const { startUpdateProduct } = useProductStore();
   const { id } = useParams();
   const { product } = useProductStore();
   const [loading, setLoading] = useState(false);
-  const [initialValues, setInitialValues] = useState({
+
+  const [initialValues] = useState({
     title: product.title,
     description: product.description,
     code: product.code,

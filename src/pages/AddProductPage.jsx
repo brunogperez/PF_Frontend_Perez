@@ -56,7 +56,7 @@ export const AddProductPage = () => {
 
       const success = await startCreateProduct(formData)
 
-      console.log({ success })
+
 
       if (success) {
         setLoading(false)
