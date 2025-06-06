@@ -102,6 +102,19 @@ export const deleteInactiveUsers = async () => {
   }
 };
 
+export const switchRole = async (_id, newRole) => {
+  try {
+    const { data } = await ecommerceApi.put(`/session/switchRole/${_id}`, { role: newRole });
+    return { ok: true, data };
+  } catch (error) {
+    console.error('Error en switchRole:', error);
+    return { 
+      ok: false, 
+      msg: error.response?.data?.msg || 'Error al cambiar el rol' 
+    };
+  }
+};
+
 //PRODUCTS
 
 export const getProducts = async (pageProducts) => {

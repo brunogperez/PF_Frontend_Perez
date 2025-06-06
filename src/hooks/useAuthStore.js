@@ -8,6 +8,7 @@ import {
   registerUser,
   resetPass,
   sendEmailResetPass,
+  switchRole,
   validarToken,
 } from "../api/requestApi";
 import { onGetUsers, onLogin, onLogout } from "../store/authSlice";
@@ -157,6 +158,31 @@ export const useAuthStore = () => {
     });
   };
 
+  const startSwitchRole = async (id, newRole) => {
+    try {
+      const { data } = await switchRole(id, newRole);
+      const { users } = await getUsers();
+      if (users && data) {
+        dispatch(onGetUsers(users));
+        return Swal.fire({
+          title: "Proceso exitoso",
+          html: `Rol cambiado a ${newRole}!`,
+          icon: "success",
+          timer: 1000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.error('Error al cambiar el rol:', error);
+    }
+    
+    return Swal.fire({
+      title: "Ocurrió un error al cambiar el rol",
+      html: "Por favor intenta nuevamente más tarde",
+      icon: "error",
+    });
+  };
+
   return {
     users,
     _id,
@@ -177,5 +203,6 @@ export const useAuthStore = () => {
     startGetUsers,
     startDeleteInactive,
     startDeleteUser,
+    startSwitchRole,
   };
 };
