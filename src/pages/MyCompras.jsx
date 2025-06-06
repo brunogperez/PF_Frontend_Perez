@@ -3,6 +3,7 @@ import { Button, Card, CardActionArea, CardContent, Typography } from '@mui/mate
 import { Link } from 'react-router-dom'
 import { useTicketStore } from '../hooks/useTicketStore'
 import { useAuthStore } from '../hooks/useAuthStore'
+import { LoadingComponent } from '../components/LoadingComponent'
 
 export const MyCompras = () => {
 
@@ -25,7 +26,9 @@ export const MyCompras = () => {
   if (!tickets) {
     return (
       <>
-        <Typography variant='h4'>Cargando tus compras...</Typography>
+        <Typography variant='h4' style={{ marginTop: '45vh', marginLeft: '33vw' }}>
+          <LoadingComponent />
+        </Typography>
       </>
     )
   }

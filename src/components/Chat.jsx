@@ -5,6 +5,7 @@ import { TextField } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { getVarEnv } from '../helpers/getVarEnv'
 import { useMessageStore } from '../hooks/useMessageStore'
+import { addMessage } from '../store/messageSlice'
 import ButtonCustom from './ButtonCustom'
 
 
@@ -13,18 +14,22 @@ const socket = io(VITE_SOCKET_URL_API, { transports: ['websocket'] });
 
 
 export const Chat = () => {
-  const dispatch = useDispatch(); // Usamos dispatch de Redux
-  const { first_name, last_name } = useAuthStore(); // Extrae el nombre del usuario
+  const dispatch = useDispatch(); 
+  const { first_name, last_name } = useAuthStore(); 
   const { messages, startGetMessages } = useMessageStore();
-  const [chatMessages, setChatMessages] = useState(""); // Estado local para el mensaje que escribe el usuario
+  const [chatMessages, setChatMessages] = useState(""); 
 
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    socket.connect().then(() => {
+      console.log("Socket connected");
+    });
 
     startGetMessages();
 
     socket.on("mensaje", receiveMessage);
+
 
     return () => {
       socket.off("mensaje", receiveMessage);
@@ -33,7 +38,7 @@ export const Chat = () => {
   }, []);
 
   const receiveMessage = (message) => {
-    dispatch(startGetMessages(message));
+    dispatch(addMessage(message));
   }
 
   const handleSubmit = (event) => {
@@ -66,8 +71,8 @@ export const Chat = () => {
     <div className='max-w-3xl items-center justify-center mx-auto mt-7 ' >
       <div
         style={{
-          scrollbarWidth: 'none', // Para Firefox
-          msOverflowStyle: 'none' // Para Internet Explorer y Edge
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none' 
         }}
         className='overflow-y-auto h-[700px] bg-gray-400 rounded-xl shadow-md items-center justify-center mb-4'
       >
@@ -108,7 +113,7 @@ export const Chat = () => {
           onChange={(e) => setChatMessages(e.target.value)}
           style={{ marginRight: '10px', }}
         />
-        <ButtonCustom onclick={handleSubmit} type='submit' text='Enviar' />
+        <ButtonCustom onClick={handleSubmit} type='submit' text='Enviar' />
       </form>
     </div>
   );

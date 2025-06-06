@@ -49,12 +49,12 @@ export const AppRouter = () => {
               <Route path='/chat' element={<Chat />} />
               <Route path='/mis-compras' element={<MyCompras />} />
               <Route path='/mi-carrito' element={<MyCartPage />} />
+              <Route path='/users-page' element={<UsersPage />} />
+              <Route path='/admin-product' element={<AdminProductPage />} />
               {
                 isAdmin &&
                 <>
 
-                  <Route path='/users-page' element={<UsersPage />} />
-                  <Route path='/admin-product' element={<AdminProductPage />} />
                   <Route path='/admin-product/add' element={<AddProductPage />} />
                   <Route path="/admin-product/edit/:id" element={<EditProductPage />} />
                 </>
