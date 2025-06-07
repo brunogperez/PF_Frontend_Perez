@@ -36,13 +36,33 @@ export const registerUser = async (email, password, first_name, last_name) => {
 };
 
 export const validarToken = async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return { ok: false };
+  
   try {
     const { data } = await ecommerceApi.get("/session/renew");
-    const { token, user } = data;
+    const { token: newToken, user } = data;
     const { _id, first_name, last_name, role, cart_id } = user;
-    localStorage.setItem("token", token);
-    return { ok: true, _id, first_name, last_name, role, cart_id };
+    
+    // Only update token if a new one is provided
+    if (newToken) {
+      localStorage.setItem("token", newToken);
+    }
+    
+    return { 
+      ok: true, 
+      _id, 
+      first_name, 
+      last_name, 
+      role, 
+      cart_id 
+    };
   } catch (error) {
+    console.error('Error validating token:', error);
+    // Clear invalid token
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+    }
     return { ok: false };
   }
 };

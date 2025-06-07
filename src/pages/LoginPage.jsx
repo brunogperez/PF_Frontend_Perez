@@ -1,5 +1,6 @@
 
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { useState } from 'react';
+import { Button, CircularProgress, Grid, TextField, Typography } from '@mui/material'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Link } from 'react-router-dom'
@@ -17,6 +18,7 @@ export const LoginPage = () => {
     password: Yup.string().required('La contraseña es obligatoria').min(6, 'La contraseña debe tener al menos 6 caracteres'),
   })
 
+  const [isLoading, setIsLoading] = useState(false);
   const { values, handleChange, errors } = useFormik({ initialValues, validationSchema });
   const { startLogin } = useAuthStore();
 
@@ -24,10 +26,16 @@ export const LoginPage = () => {
 
   const disabled = (email != '' && password != '') ? false : true;
 
-  const onSubmitForm = () => {
-    const isEmpty = Object.keys(errors).lenght === 0
-    if (isEmpty) return
-    startLogin(email, password)
+  const onSubmitForm = async () => {
+    const isEmpty = Object.keys(errors).length === 0;
+    if (!isEmpty) return;
+    
+    try {
+      setIsLoading(true);
+      await startLogin(email, password);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -48,7 +56,7 @@ export const LoginPage = () => {
               type='email'
               label="Email"
               variant="filled"
-              id="filled-basic"
+              id="login-email"
               size='small'
               fullWidth
               onChange={handleChange}
@@ -63,7 +71,7 @@ export const LoginPage = () => {
               type='password'
               label="Password"
               variant="filled"
-              id="filled-basic"
+              id="login-password"
               size='small'
               fullWidth
               onChange={handleChange}
@@ -73,13 +81,14 @@ export const LoginPage = () => {
           </Grid>
           <Grid item mt={3} xs={12}>
             <Button
-              disabled={disabled}
+              disabled={disabled || isLoading}
               variant="contained"
               color="primary"
               onClick={onSubmitForm}
               fullWidth
+              startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
             >
-              Iniciar Sesion
+              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
           </Grid>
           <Grid container direction='row' justifyContent='end' mt={2}>

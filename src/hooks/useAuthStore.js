@@ -40,8 +40,6 @@ export const useAuthStore = () => {
         // Then load the cart if cart_id exists
         if (cart_id) {
           await startGetCartById(cart_id);
-        } else {
-          console.log('No cart_id received in login response');
         }
         return { ok: true };
       }
@@ -79,13 +77,24 @@ export const useAuthStore = () => {
   };
 
   const startCheckingLogin = async () => {
-    const resp = await validarToken();
-    if (resp.ok) {
-      const { _id, cart_id, last_name, first_name, role } = resp;
-      startGetCartById(cart_id);
-      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
+    try {
+      const resp = await validarToken();
+      if (resp.ok) {
+        const { _id, cart_id, last_name, first_name, role } = resp;
+        // Dispatch login first to update auth state
+        dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
+        // Then load cart if cart_id exists
+        if (cart_id) {
+          await startGetCartById(cart_id);
+        }
+        return;
+      }
+      // If we get here, token validation failed
+      startLogout();
+    } catch (error) {
+      console.error('Error during login check:', error);
+      startLogout();
     }
-    startLogout();
   };
 
   const startResetPass = async (password, token) => {
