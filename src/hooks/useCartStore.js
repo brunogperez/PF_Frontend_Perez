@@ -11,16 +11,21 @@ export const useCartStore = () => {
   const { cart } = useSelector(state => state.cart)
 
   const startGetCartById = async (id) => {
-    const resp = await getCartById(id)
-    if (resp.ok) {
-      dispatch(onCart(resp.cart))
-      return
+    if (!id) {
+      console.log('No cart ID provided, cannot fetch cart')
+      return { ok: false }
     }
-    return Swal.fire({
-      title: 'Ocurrió un error al obtener los productos',
-      html: 'Por favor, intenta nuevamente',
-      icon: 'error',
-    })
+    try {
+      const resp = await getCartById(id)
+      if (resp.ok) {
+        dispatch(onCart(resp.cart))
+        return { ok: true }
+      }
+      return { ok: false, msg: 'Error al obtener el carrito' }
+    } catch (error) {
+      console.error('Error fetching cart:', error)
+      return { ok: false, msg: 'Error al conectar con el servidor' }
+    }
   }
 
   const startAddProductInCart = async (idProduct) => {

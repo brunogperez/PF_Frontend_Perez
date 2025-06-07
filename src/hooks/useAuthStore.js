@@ -31,17 +31,33 @@ export const useAuthStore = () => {
   const { startGetCartById } = useCartStore();
 
   const startLogin = async (email, password) => {
-    const resp = await loginUser(email, password);
-    if (resp.ok) {
-      const { _id, cart_id, last_name, first_name, role } = resp;
-      startGetCartById(cart_id);
-      return dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
+    try {
+      const resp = await loginUser(email, password);
+      if (resp.ok) {
+        const { _id, cart_id, last_name, first_name, role } = resp;
+        // First update the auth state
+        dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
+        // Then load the cart if cart_id exists
+        if (cart_id) {
+          await startGetCartById(cart_id);
+        } else {
+          console.log('No cart_id received in login response');
+        }
+        return { ok: true };
+      }
+      return Swal.fire({
+        title: "Ha ocurrido un error",
+        html: "Por favor, intenta nuevamente",
+        icon: "error",
+      });
+    } catch (error) {
+      console.error('Login error:', error);
+      return Swal.fire({
+        title: "Error de conexión",
+        html: "No se pudo conectar con el servidor",
+        icon: "error",
+      });
     }
-    return Swal.fire({
-      title: "Ha ocurrido un error",
-      html: "Por favor, intenta nuevamente",
-      icon: "error",
-    });
   };
 
   const startRegister = async (email, password, first_name, last_name) => {
