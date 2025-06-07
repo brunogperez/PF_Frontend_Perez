@@ -77,23 +77,45 @@ export const useAuthStore = () => {
   };
 
   const startCheckingLogin = async () => {
+    let loginSuccessful = false;
+    
     try {
       const resp = await validarToken();
+      
       if (resp.ok) {
         const { _id, cart_id, last_name, first_name, role } = resp;
         // Dispatch login first to update auth state
         dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
+        loginSuccessful = true;
+        
         // Then load cart if cart_id exists
         if (cart_id) {
-          await startGetCartById(cart_id);
+          try {
+            await startGetCartById(cart_id);
+          } catch (cartError) {
+            console.error('Error loading cart:', cartError);
+            // Continue even if cart loading fails
+          }
         }
-        return;
+        return { ok: true };
       }
-      // If we get here, token validation failed
-      startLogout();
+      
+      // Handle failed token validation
+      console.warn('Token validation failed:', resp.error || 'Unknown error');
+      if (resp.status === 500) {
+        console.error('Server error during token validation');
+      }
+      
+      return { ok: false, error: resp.error };
+      
     } catch (error) {
-      console.error('Error during login check:', error);
-      startLogout();
+      console.error('Unexpected error during login check:', error);
+      return { ok: false, error: 'Unexpected error' };
+    } finally {
+      // Only logout if login was not successful
+      if (!loginSuccessful) {
+        startLogout();
+      }
     }
   };
 

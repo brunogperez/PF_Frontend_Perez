@@ -37,16 +37,27 @@ export const registerUser = async (email, password, first_name, last_name) => {
 
 export const validarToken = async () => {
   const token = localStorage.getItem('token');
-  if (!token) return { ok: false };
+  if (!token) {
+    console.log('No token found in localStorage');
+    return { ok: false, error: 'No token found' };
+  }
   
   try {
+    console.log('Attempting to validate token...');
     const { data } = await ecommerceApi.get("/session/renew");
+    
+    if (!data || !data.user) {
+      console.error('Invalid response format from server:', data);
+      return { ok: false, error: 'Invalid server response' };
+    }
+    
     const { token: newToken, user } = data;
     const { _id, first_name, last_name, role, cart_id } = user;
     
     // Only update token if a new one is provided
     if (newToken) {
       localStorage.setItem("token", newToken);
+      console.log('Token refreshed successfully');
     }
     
     return { 
@@ -58,12 +69,25 @@ export const validarToken = async () => {
       cart_id 
     };
   } catch (error) {
-    console.error('Error validating token:', error);
-    // Clear invalid token
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-    }
-    return { ok: false };
+    console.error('Error validating token:', {
+      message: error.message,
+      status: error.response?.status,
+      data: error.response?.data,
+      config: {
+        url: error.config?.url,
+        method: error.config?.method,
+        headers: error.config?.headers
+      }
+    });
+    
+    // Clear token on any error
+    localStorage.removeItem('token');
+    
+    return { 
+      ok: false, 
+      error: error.response?.data?.message || 'Error de autenticación',
+      status: error.response?.status
+    };
   }
 };
 
