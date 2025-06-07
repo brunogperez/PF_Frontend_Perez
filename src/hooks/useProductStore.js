@@ -90,7 +90,7 @@ export const useProductStore = () => {
 
     if (resp.ok) {
       Swal.fire({
-        title: "Prodcuto actualizado!",
+        title: "Producto actualizado!",
         icon: "success",
       });
       return onUpdateProduct(resp.producto);
