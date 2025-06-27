@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradientes para crear profundidad -->
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#333333;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f1f1f;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#383838;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#252525;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#404040;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2c2c2c;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#454545;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#303030;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo base -->
+  <rect width="100%" height="100%" fill="#1a1a1a"/>
+  
+  <!-- Polígonos geométricos -->
+  
+  <!-- Grupo 1 - Esquina superior izquierda -->
+  <polygon points="0,0 300,0 150,200 0,150" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="150,200 300,0 450,100 250,250" fill="url(#grad2)" opacity="0.9"/>
+  <polygon points="300,0 600,0 500,150 450,100" fill="url(#grad3)" opacity="0.7"/>
+  <polygon points="450,100 500,150 350,300 250,250" fill="url(#grad4)" opacity="0.8"/>
+  
+  <!-- Grupo 2 - Centro superior -->
+  <polygon points="600,0 900,0 800,120 700,80" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="700,80 800,120 750,250 650,200" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="800,120 900,0 1100,50 950,180" fill="url(#grad3)" opacity="0.7"/>
+  <polygon points="900,0 1200,0 1150,100 1100,50" fill="url(#grad4)" opacity="0.9"/>
+  
+  <!-- Grupo 3 - Esquina superior derecha -->
+  <polygon points="1200,0 1500,0 1400,150 1350,100" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="1350,100 1400,150 1300,280 1200,220" fill="url(#grad5)" opacity="0.7"/>
+  <polygon points="1500,0 1800,0 1750,130 1650,80" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="1650,80 1750,130 1700,250 1600,200" fill="url(#grad3)" opacity="0.8"/>
+  <polygon points="1800,0 1920,0 1920,100 1850,120" fill="url(#grad4)" opacity="0.9"/>
+  
+  <!-- Grupo 4 - Centro izquierda -->
+  <polygon points="0,150 150,200 100,350 0,300" fill="url(#grad3)" opacity="0.7"/>
+  <polygon points="100,350 150,200 250,250 200,400" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="150,200 350,300 300,450 200,400" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="250,250 350,300 320,420 220,380" fill="url(#grad2)" opacity="0.9"/>
+  
+  <!-- Grupo 5 - Centro -->
+  <polygon points="350,300 550,280 520,420 420,450" fill="url(#grad5)" opacity="0.8"/>
+  <polygon points="520,420 550,280 750,250 700,400" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="650,200 750,250 700,400 600,350" fill="url(#grad3)" opacity="0.8"/>
+  <polygon points="750,250 950,180 900,320 800,380" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="800,380 900,320 850,480 750,520" fill="url(#grad4)" opacity="0.9"/>
+  
+  <!-- Grupo 6 - Centro derecha -->
+  <polygon points="950,180 1150,100 1200,220 1050,280" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="1050,280 1200,220 1300,280 1150,350" fill="url(#grad5)" opacity="0.8"/>
+  <polygon points="1150,350 1300,280 1400,150 1350,320" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="1300,280 1600,200 1550,350 1450,400" fill="url(#grad3)" opacity="0.8"/>
+  <polygon points="1450,400 1550,350 1700,250 1650,420" fill="url(#grad4)" opacity="0.7"/>
+  
+  <!-- Grupo 7 - Derecha -->
+  <polygon points="1600,200 1700,250 1650,420 1550,380" fill="url(#grad1)" opacity="0.9"/>
+  <polygon points="1650,420 1700,250 1850,120 1800,350" fill="url(#grad2)" opacity="0.7"/>
+  <polygon points="1700,250 1850,120 1920,100 1920,280 1800,350" fill="url(#grad3)" opacity="0.8"/>
+  <polygon points="1800,350 1920,280 1920,450 1850,480" fill="url(#grad5)" opacity="0.6"/>
+  
+  <!-- Grupo 8 - Inferior izquierda -->
+  <polygon points="0,300 100,350 50,500 0,450" fill="url(#grad4)" opacity="0.8"/>
+  <polygon points="50,500 100,350 200,400 150,550" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="150,550 200,400 320,420 280,580" fill="url(#grad2)" opacity="0.9"/>
+  <polygon points="200,400 320,420 420,450 350,500" fill="url(#grad3)" opacity="0.6"/>
+  <polygon points="280,580 350,500 420,450 380,620" fill="url(#grad5)" opacity="0.8"/>
+  
+  <!-- Grupo 9 - Inferior centro -->
+  <polygon points="420,450 520,420 550,580 450,620" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="520,420 700,400 650,550 580,580" fill="url(#grad4)" opacity="0.8"/>
+  <polygon points="700,400 800,380 850,480 750,520" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="750,520 850,480 900,620 800,680" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="850,480 1050,420 1000,580 950,620" fill="url(#grad5)" opacity="0.7"/>
+  
+  <!-- Grupo 10 - Inferior derecha -->
+  <polygon points="1050,420 1350,320 1300,480 1200,520" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="1200,520 1300,480 1450,400 1400,580" fill="url(#grad2)" opacity="0.7"/>
+  <polygon points="1350,320 1650,420 1600,580 1500,520" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="1500,520 1600,580 1800,350 1750,650" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="1650,420 1850,480 1920,450 1920,620 1800,680" fill="url(#grad5)" opacity="0.8"/>
+  
+  <!-- Grupo 11 - Parte inferior -->
+  <polygon points="0,450 50,500 0,650" fill="url(#grad2)" opacity="0.7"/>
+  <polygon points="50,500 150,550 100,700 0,650" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="150,550 280,580 250,750 120,720" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="280,580 380,620 350,800 250,750" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="380,620 450,620 500,780 400,820" fill="url(#grad5)" opacity="0.7"/>
+  <polygon points="450,620 550,580 600,750 520,800" fill="url(#grad1)" opacity="0.8"/>
+  
+  <!-- Grupo 12 - Inferior centro-derecha -->
+  <polygon points="580,580 650,550 700,720 630,750" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="650,550 750,520 800,680 720,720" fill="url(#grad4)" opacity="0.8"/>
+  <polygon points="750,520 800,680 900,620 850,750" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="800,680 900,620 1000,580 950,780" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="950,780 1000,580 1200,520 1150,720" fill="url(#grad5)" opacity="0.6"/>
+  
+  <!-- Grupo 13 - Esquina inferior derecha -->
+  <polygon points="1200,520 1400,580 1350,750 1200,720" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="1350,750 1400,580 1600,580 1550,780" fill="url(#grad2)" opacity="0.7"/>
+  <polygon points="1400,580 1750,650 1700,850 1600,800" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="1600,580 1800,680 1750,880 1650,820" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="1750,650 1920,620 1920,820 1800,850" fill="url(#grad5)" opacity="0.8"/>
+  
+  <!-- Parte más inferior -->
+  <polygon points="0,650 100,700 80,900 0,850" fill="url(#grad3)" opacity="0.7"/>
+  <polygon points="100,700 250,750 220,950 120,920" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="250,750 400,820 380,1020 280,980" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="400,820 520,800 550,1000 450,1050" fill="url(#grad2)" opacity="0.9"/>
+  <polygon points="520,800 630,750 680,950 580,1000" fill="url(#grad5)" opacity="0.7"/>
+  <polygon points="630,750 720,720 780,920 700,980" fill="url(#grad1)" opacity="0.8"/>
+  <polygon points="720,720 850,750 900,950 800,1000" fill="url(#grad3)" opacity="0.6"/>
+  <polygon points="850,750 950,780 1000,980 920,1020" fill="url(#grad4)" opacity="0.8"/>
+  <polygon points="950,780 1150,720 1200,920 1080,980" fill="url(#grad2)" opacity="0.7"/>
+  <polygon points="1150,720 1350,750 1400,950 1280,1000" fill="url(#grad5)" opacity="0.9"/>
+  <polygon points="1350,750 1550,780 1600,980 1480,1020" fill="url(#grad1)" opacity="0.6"/>
+  <polygon points="1550,780 1750,880 1800,1080 1680,1080" fill="url(#grad3)" opacity="0.8"/>
+  <polygon points="1750,880 1920,820 1920,1080 1800,1080" fill="url(#grad4)" opacity="0.7"/>
+  
+  <!-- Base inferior completa -->
+  <polygon points="0,850 0,1080 120,1080 80,900" fill="url(#grad2)" opacity="0.8"/>
+  <polygon points="120,1080 280,980 380,1020 220,1080" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="220,1080 380,1020 450,1050 350,1080" fill="url(#grad4)" opacity="0.6"/>
+  <polygon points="350,1080 450,1050 550,1000 480,1080" fill="url(#grad3)" opacity="0.9"/>
+  <polygon points="480,1080 550,1000 580,1000 650,1080" fill="url(#grad5)" opacity="0.8"/>
+  <polygon points="650,1080 700,980 800,1000 750,1080" fill="url(#grad1)" opacity="0.7"/>
+  <polygon points="750,1080 800,1000 920,1020 850,1080" fill="url(#grad2)" opacity="0.6"/>
+  <polygon points="850,1080 920,1020 1080,980 980,1080" fill="url(#grad4)" opacity="0.8"/>
+  <polygon points="980,1080 1080,980 1280,1000 1180,1080" fill="url(#grad3)" opacity="0.7"/>
+  <polygon points="1180,1080 1280,1000 1480,1020 1380,1080" fill="url(#grad5)" opacity="0.9"/>
+  <polygon points="1380,1080 1480,1020 1680,1080 1580,1080" fill="url(#grad1)" opacity="0.6"/>
+  <polygon points="1580,1080 1680,1080 1800,1080 1720,1080" fill="url(#grad2)" opacity="0.8"/>
+  <polygon points="1720,1080 1800,1080 1920,1080 1860,1080" fill="url(#grad4)" opacity="0.7"/>
+</svg>

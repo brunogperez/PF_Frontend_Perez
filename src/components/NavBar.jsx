@@ -212,6 +212,8 @@ export const NavBar = () => {
         sx={{
           background: 'linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(160, 53, 20) 100%)',
           borderBottom: `1px solid ${alpha('#000', 0.12)}`,
+          position: 'relative',
+          zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
         <Toolbar sx={{ py: 1 }}>
