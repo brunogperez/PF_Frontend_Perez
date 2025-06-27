@@ -5,9 +5,6 @@ import { IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-
-
-
 const images = [
     'https://res.cloudinary.com/divujqlv8/image/upload/v1734112332/slide3_lv3b1d.webp',
     'https://res.cloudinary.com/divujqlv8/image/upload/v1734112332/slide1_ynoj7q.webp',

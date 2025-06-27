@@ -3,8 +3,6 @@ import { useProductStore } from '../hooks/useProductStore'
 import { CardItem } from './CardItem'
 import { useEffect, useState } from 'react'
 import { LoadingComponent } from './LoadingComponent'
-import { Carousel } from '../components/Carousel.jsx'
-import { Footer } from '../components/Footer.jsx'
 
 
 export const CardProducts = () => {
@@ -33,9 +31,7 @@ export const CardProducts = () => {
 
 
   return (
-
-    <>
-      <Carousel />
+    <Box>
       <Grid container spacing={5} alignItems='center' justifyContent='center' sx={{ paddingX: 20, paddingTop: 1, marginBlock: 1 }}>
         {
           products?.map(product => (
@@ -45,8 +41,8 @@ export const CardProducts = () => {
               alignItems: 'center',
               marginBlock: 2,
               width: '100%'
-            }} >
-              <CardItem  {...product} />
+            }}>
+              <CardItem {...product} />
             </Grid>
           ))
         }
@@ -74,8 +70,7 @@ export const CardProducts = () => {
           </Box>
         )}
       </Box>
-      <Footer />
-    </>
+    </Box>
   )
 }
 

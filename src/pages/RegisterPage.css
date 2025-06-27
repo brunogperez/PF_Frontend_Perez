@@ -1,0 +1,267 @@
+/* RegisterPage.css */
+.register-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #FF8A65 0%, #FFB74D 50%, #FFCC02 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 950px;
+  height: 650px;
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.1);
+  display: flex;
+  overflow: hidden;
+}
+
+.register-illustration {
+  flex: 1;
+  background: linear-gradient(135deg, #aa5c44 0%, #FFB74D 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.illustration-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+/* Illustration elements */
+.register-illustration .circle-1 {
+  width: 180px;
+  height: 180px;
+  background-color: #FFCC02;
+  border-radius: 50%;
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.register-illustration .circle-2 {
+  width: 140px;
+  height: 140px;
+  background-color: #FF7043;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.register-illustration .circle-3 {
+  width: 100px;
+  height: 100px;
+  background-color: #FFB74D;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10%;
+  left: 25%;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.register-illustration .shape-1 {
+  width: 120px;
+  height: 240px;
+  background-color: #81C784;
+  border-radius: 60px;
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  transform: rotate(25deg);
+  opacity: 0.7;
+}
+
+.register-illustration .triangle {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 50px solid #333;
+  position: absolute;
+  top: 30%;
+  right: 10%;
+  opacity: 0.6;
+  transform: rotate(45deg);
+}
+
+.register-illustration .wave {
+  position: absolute;
+  bottom: 20%;
+  left: 20%;
+  width: 120px;
+  height: 60px;
+}
+
+.register-illustration .wave path {
+  stroke: #333;
+  stroke-width: 3;
+  fill: none;
+  opacity: 0.5;
+}
+
+.register-illustration .dot-1 {
+  width: 6px;
+  height: 6px;
+  background-color: #FF9800;
+  border-radius: 50%;
+  position: absolute;
+  top: 40%;
+  left: 40%;
+}
+
+.register-illustration .dot-2 {
+  width: 10px;
+  height: 10px;
+  background-color: #FFC107;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 45%;
+  right: 35%;
+}
+
+.register-illustration .dot-3 {
+  width: 14px;
+  height: 14px;
+  background-color: #FF6F00;
+  border-radius: 50%;
+  position: absolute;
+  top: 20%;
+  right: 40%;
+}
+
+.register-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 40px;
+}
+
+.register-title {
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.register-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+
+.register-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 0;
+}
+
+.form-field {
+  flex: 1;
+}
+
+.text-field .MuiOutlinedInput-root {
+  border-radius: 12px;
+  background-color: #f8f9fa;
+}
+
+.text-field .MuiOutlinedInput-root:hover fieldset {
+  border-color: #FF8A65;
+}
+
+.text-field .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #FF8A65;
+}
+
+.text-field .MuiInputLabel-root.Mui-focused {
+  color: #FF8A65;
+}
+
+.register-button {
+  padding: 14.4px 0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: none;
+  background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%);
+  box-shadow: 0 8px 24px rgba(255, 138, 101, 0.4);
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.register-button:hover {
+  background: linear-gradient(135deg, #FF7043 0%, #FF5722 100%);
+  box-shadow: 0 12px 32px rgba(255, 138, 101, 0.5);
+  transform: translateY(-2px);
+}
+
+.register-button:disabled {
+  background: #ccc;
+  box-shadow: none;
+}
+
+.illustration-text {
+  color: white;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.95rem;
+  opacity: 0.9;
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 10;
+}
+
+.login-link-container {
+  text-align: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #eee;
+}
+
+.login-link {
+  color: #FF8A65;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Responsive styles */
+@media (min-width: 900px) {
+  .register-illustration {
+    display: flex;
+  }
+  
+  .register-content {
+    padding: 48px 80px;
+  }
+}
