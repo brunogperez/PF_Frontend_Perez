@@ -1,9 +1,11 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useAuthStore } from '../hooks/useAuthStore'
-import { useNavigate } from 'react-router-dom'
-import queryString from 'query-string'
+import { useState } from 'react';
+import { Button, TextField, Typography, Box, CircularProgress } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useAuthStore } from '../hooks/useAuthStore';
+import { useNavigate, Link } from 'react-router-dom';
+import queryString from 'query-string';
+import './ResetPasswordPage.css';
 
 export const ResetPasswordPage = () => {
 
@@ -19,12 +21,22 @@ export const ResetPasswordPage = () => {
         password: Yup.string().required('La contraseña es obligatoria').min(6, 'La contraseña debe tener al menos 6 caracteres'),
     })
 
-    const { values, handleChange, errors, handleSubmit } = useFormik({
+    const [isLoading, setIsLoading] = useState(false);
+
+    const { values, handleChange, errors, handleSubmit, handleBlur, touched } = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: async (values) => {
-            const result = await startResetPass(values.password, token)
-            result && navigate('/session/login')
+        onSubmit: async (values, { setSubmitting }) => {
+            try {
+                setIsLoading(true);
+                const result = await startResetPass(values.password, token);
+                if (result) {
+                    navigate('/session/login');
+                }
+            } finally {
+                setIsLoading(false);
+                setSubmitting(false);
+            }
         }
     })
 
@@ -32,47 +44,66 @@ export const ResetPasswordPage = () => {
     const { startResetPass } = useAuthStore()
 
     return (
-        <Grid
-            container
-            spacing={0}
-            direction='column'
-            alignItems='center'
-            justifyContent='center'
-            sx={{ minHeight: '100vh', backgroundColor: '#262254' }}
-        >
+        <Box className="reset-password-container">
+            <Box className="reset-password-card">
+                <Typography variant='h4' className="reset-password-title">
+                    Restablecer Contraseña
+                </Typography>
+                
+                <Typography variant='body1' className="reset-password-text">
+                    Ingresa tu nueva contraseña a continuación.
+                </Typography>
 
-            <Grid item sx={{ width: 450, backgroundColor: 'white', borderRadius: 2, padding: 3 }}>
+                <Box 
+                    component="form" 
+                    onSubmit={handleSubmit} 
+                    className="reset-password-form"
+                    noValidate
+                >
+                    <TextField
+                        label='Nueva Contraseña'
+                        type='password'
+                        placeholder='Ingresa tu nueva contraseña'
+                        fullWidth
+                        name='password'
+                        value={password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={touched.password && Boolean(errors.password)}
+                        helperText={touched.password && errors.password}
+                        variant="outlined"
+                        size="small"
+                        margin="normal"
+                        InputProps={{
+                            sx: { fontSize: '0.95rem' }
+                        }}
+                    />
 
-                <Typography variant='h5'>Restablecer Contraseña.</Typography>
+                    <Button 
+                        type="submit" 
+                        variant="contained" 
+                        fullWidth 
+                        className="reset-password-button"
+                        disabled={isLoading || !password || Object.keys(errors).length > 0}
+                        sx={{ mt: 2 }}
+                    >
+                        {isLoading ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            'Restablecer Contraseña'
+                        )}
+                    </Button>
 
-                <Grid container>
-
-                    <Grid item mt={2} xs={12}>
-                        <TextField
-                            name='password'
-                            value={password}
-                            type='password'
-                            label='Nueva Contraseña'
-                            variant='outlined'
-                            size='small'
-                            fullWidth
-                            onChange={handleChange}
-                            error={Boolean(errors.password)}
-                            helperText={errors.password}
-                        />
-                    </Grid>
-
-                    <Grid item mt={2} xs={12}>
-                        <Button
-                            variant="contained"
-                            onClick={handleSubmit}
-                            fullWidth>Restablecer Contraseña</Button>
-                    </Grid>
-
-                </Grid>
-
-            </Grid>
-
-        </Grid>
-    )
+                    <Box sx={{ textAlign: 'center', mt: 2 }}>
+                        <Typography variant="body2">
+                            ¿Ya tienes una cuenta?{' '}
+                            <Link to="/session/login" className="reset-password-link">
+                                Iniciar Sesión
+                            </Link>
+                        </Typography>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+    );
 }

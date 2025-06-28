@@ -1,8 +1,10 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useAuthStore } from '../hooks/useAuthStore'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { Button, TextField, Typography, Box, CircularProgress } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useAuthStore } from '../hooks/useAuthStore';
+import { useNavigate, Link } from 'react-router-dom';
+import './ResetPasswordEmailPage.css';
 
 export const ResetPasswordEmailPage = () => {
 
@@ -16,12 +18,21 @@ export const ResetPasswordEmailPage = () => {
     email: Yup.string().required('El email es obligatorio').email('Email invalido'),
   })
 
-  const { values, handleChange, errors, handleSubmit } = useFormik({
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const { values, handleChange, errors, handleSubmit, handleBlur, touched } = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      startSendEmailResetPass(values.email)
-      navigate('/')
+    onSubmit: async (values, { setSubmitting }) => {
+      try {
+        setIsLoading(true);
+        await startSendEmailResetPass(values.email);
+        setIsSubmitted(true);
+      } finally {
+        setIsLoading(false);
+        setSubmitting(false);
+      }
     }
   })
 
@@ -29,47 +40,84 @@ export const ResetPasswordEmailPage = () => {
   const { startSendEmailResetPass } = useAuthStore()
 
   return (
-    <Grid
-      container
-      spacing={0}
-      direction='column'
-      alignItems='center'
-      justifyContent='center'
-      sx={{ minHeight: '100vh', backgroundColor: '#262254' }}
-    >
+    <Box className="reset-email-container">
+      <Box className="reset-email-card">
+        <Typography variant='h4' className="reset-email-title">
+          Restablecer Contraseña
+        </Typography>
+        
+        {isSubmitted ? (
+          <>
+            <Typography variant='body1' className="reset-email-text">
+              Hemos enviado un enlace de restablecimiento a <strong>{email}</strong>.
+              Por favor, revisa tu bandeja de entrada y sigue las instrucciones.
+            </Typography>
+            <Typography variant='body2' className="reset-email-success">
+              Si no ves el correo, revisa tu carpeta de spam.
+            </Typography>
+            <Box sx={{ textAlign: 'center', mt: 3 }}>
+              <Link to="/session/login" className="reset-email-link">
+                Volver al inicio de sesión
+              </Link>
+            </Box>
+          </>
+        ) : (
+          <>
+            <Typography variant='body1' className="reset-email-text">
+              Ingresa tu dirección de correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
+            </Typography>
+            
+            <Box 
+              component="form" 
+              onSubmit={handleSubmit} 
+              className="reset-email-form"
+              noValidate
+            >
+              <TextField
+                label='Correo electrónico'
+                type='email'
+                placeholder='Ingresa tu correo electrónico'
+                fullWidth
+                name='email'
+                value={email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+                variant="outlined"
+                size="small"
+                margin="normal"
+                InputProps={{
+                  sx: { fontSize: '0.95rem' }
+                }}
+              />
 
-      <Grid item sx={{ width: 450, backgroundColor: 'white', borderRadius: 2, padding: 3 }}>
+              <Button 
+                type="submit" 
+                variant="contained" 
+                fullWidth 
+                className="reset-email-button"
+                disabled={isLoading || !email || Object.keys(errors).length > 0}
+              >
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  'Enviar enlace'
+                )}
+              </Button>
 
-        <Typography variant='h5'>Ingrese el email</Typography>
-
-        <Grid container>
-
-          <Grid item mt={2} xs={12}>
-            <TextField
-              name='email'
-              value={email}
-              type='email'
-              label='Email'
-              variant='outlined'
-              size='small'
-              fullWidth
-              onChange={handleChange}
-              error={Boolean(errors.email)}
-              helperText={errors.email}
-            />
-          </Grid>
-
-          <Grid item mt={2} xs={12}>
-            <Button
-              variant="contained"
-              onClick={handleSubmit}
-              fullWidth>Enviar email</Button>
-          </Grid>
-
-        </Grid>
-
-      </Grid>
-
-    </Grid>
+              <Box sx={{ textAlign: 'center', mt: 2 }}>
+                <Typography variant="body2">
+                  ¿Recordaste tu contraseña?{' '}
+                  <Link to="/session/login" className="reset-email-link">
+                    Iniciar Sesión
+                  </Link>
+                </Typography>
+              </Box>
+            </Box>
+          </>
+        )}
+      </Box>
+    </Box>
   )
 }

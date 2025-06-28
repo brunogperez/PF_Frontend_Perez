@@ -170,33 +170,91 @@ export const useAuthStore = () => {
   };
 
   const startDeleteUser = async (id) => {
-    const { data } = await deleteUser(id);
-    const { users } = await getUsers();
-    if (users,data) {
+    try {
+      console.log(`[AuthStore] Starting to delete user with ID: ${id}`);
+      const { ok, data, msg, status } = await deleteUser(id);
+      
+      if (!ok) {
+        // Handle specific error statuses
+        if (status === 403) {
+          throw new Error('No tienes permisos para realizar esta acción');
+        } else if (status === 404) {
+          throw new Error('El usuario no fue encontrado');
+        } else if (status === 400) {
+          throw new Error('No puedes eliminar tu propia cuenta');
+        } else {
+          throw new Error(msg || 'Error al eliminar el usuario');
+        }
+      }
+      
+      console.log('[AuthStore] User deleted, refreshing users list...');
+      
+      // Refresh the users list
+      const { ok: usersOk, users, msg: usersMsg } = await getUsers();
+      
+      if (!usersOk) {
+        console.error('[AuthStore] Error refreshing users list:', usersMsg);
+        throw new Error('Usuario eliminado, pero no se pudo actualizar la lista de usuarios');
+      }
+      
       dispatch(onGetUsers(users));
-      return Swal.fire({
-        title: "Proceso exitoso",
-        html: "Usuario eliminado!",
-        icon: "success",
+      
+      await Swal.fire({
+        title: "¡Éxito!",
+        text: msg || "Usuario eliminado correctamente",
+        icon: "success"
       });
+      
+      console.log('[AuthStore] User deletion process completed successfully');
+      return true;
+      
+    } catch (error) {
+      console.error('[AuthStore] Error in startDeleteUser:', {
+        error: error.message,
+        stack: error.stack,
+        userId: id
+      });
+      
+      await Swal.fire({
+        title: "Error",
+        text: error.message || 'Ocurrió un error inesperado al eliminar el usuario',
+        icon: "error",
+        confirmButtonText: "Entendido"
+      });
+      
+      return false;
     }
-    return Swal.fire({
-      title: "Ocurrio un error al obtener los usuarios",
-      html: "Por favor intentarlo mas tarde",
-      icon: "error",
-    });
   };
 
   const startDeleteInactive = async () => {
-    const { data } = await deleteInactiveUsers();
-    const { users } = await getUsers();
-    if (users, data) {
+    try {
+      const { ok, data } = await deleteInactiveUsers();
+      if (!ok) {
+        throw new Error('Error al eliminar usuarios inactivos');
+      }
+      
+      const { ok: usersOk, users } = await getUsers();
+      if (!usersOk) {
+        throw new Error('Error al obtener la lista actualizada de usuarios');
+      }
+      
       dispatch(onGetUsers(users));
-      return Swal.fire({
+      
+      Swal.fire({
         title: "Proceso exitoso",
-        html: "Usuarios eliminados!",
+        html: "Usuarios inactivos eliminados correctamente",
         icon: "success",
       });
+      
+      return true;
+    } catch (error) {
+      console.error('Error en startDeleteInactive:', error);
+      Swal.fire({
+        title: "Error",
+        html: error.message || "Ocurrió un error al eliminar usuarios inactivos",
+        icon: "error",
+      });
+      return false;
     }
     return Swal.fire({
       title: "Ocurrio un error al obtener los usuarios",

@@ -22,16 +22,22 @@ export const Chat = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    socket.connect().then(() => {
+    // Connect to socket
+    socket.connect();
+    
+    // Handle successful connection
+    const onConnect = () => {
       console.log("Socket connected");
-    });
-
-    startGetMessages();
-
+      startGetMessages();
+    };
+    
+    // Set up event listeners
+    socket.on('connect', onConnect);
     socket.on("mensaje", receiveMessage);
 
-
+    // Clean up on unmount
     return () => {
+      socket.off('connect', onConnect);
       socket.off("mensaje", receiveMessage);
       socket.disconnect();
     };

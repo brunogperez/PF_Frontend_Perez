@@ -10,11 +10,14 @@ const ecommerceApi = axios.create({
     baseURL: ecommerceURL
 })
 
-ecommerceApi.interceptors.request.use(config=>{
-    config.headers = {
-        'x-token': localStorage.getItem('token'),
+ecommerceApi.interceptors.request.use(config => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers['x-token'] = token;
     }
     return config;
-})
+}, error => {
+    return Promise.reject(error);
+});
 
 export default ecommerceApi

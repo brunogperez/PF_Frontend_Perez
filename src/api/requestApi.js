@@ -10,11 +10,29 @@ export const loginUser = async (email, password) => {
     });
 
     const { token, user } = data;
-    const { _id, first_name, last_name, role, cart_id } = user;
+    
+    if (!token) {
+      return { ok: false, msg: 'No se recibió token de autenticación' };
+    }
+
     localStorage.setItem("token", token);
-    return { ok: true, _id, first_name, last_name, role, cart_id };
+    const { _id, first_name, last_name, role, cart_id } = user;
+    
+    return { 
+      ok: true, 
+      _id, 
+      first_name, 
+      last_name, 
+      role, 
+      cart_id,
+      token
+    };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    return { 
+      ok: false, 
+      msg: error.response?.data?.msg || 'Error al iniciar sesión',
+      status: error.response?.status
+    };
   }
 };
 
@@ -31,7 +49,33 @@ export const registerUser = async (email, password, first_name, last_name) => {
     localStorage.setItem("token", token);
     return { ok: true, _id, first_name, last_name, role, cart_id };
   } catch (error) {
-    return { ok: false, msg: error.response.data.errors[0].msg };
+    console.error('Error en registerUser:', error);
+    
+    // Manejar diferentes formatos de respuesta de error
+    let errorMessage = 'Error al registrar el usuario';
+    
+    if (error.response) {
+      // El servidor respondió con un estado de error
+      if (error.response.data && error.response.data.errors && Array.isArray(error.response.data.errors) && error.response.data.errors.length > 0) {
+        // Formato: { errors: [{ msg: 'mensaje de error' }] }
+        errorMessage = error.response.data.errors[0].msg;
+      } else if (error.response.data && error.response.data.message) {
+        // Formato: { message: 'mensaje de error' }
+        errorMessage = error.response.data.message;
+      } else if (error.response.data && error.response.data.msg) {
+        // Formato: { msg: 'mensaje de error' }
+        errorMessage = error.response.data.msg;
+      } else if (error.response.status === 400) {
+        errorMessage = 'Datos de registro inválidos';
+      } else if (error.response.status === 409) {
+        errorMessage = 'El correo electrónico ya está en uso';
+      }
+    } else if (error.request) {
+      // La solicitud fue hecha pero no se recibió respuesta
+      errorMessage = 'No se pudo conectar con el servidor';
+    }
+    
+    return { ok: false, msg: errorMessage };
   }
 };
 
@@ -104,45 +148,62 @@ export const getUsers = async () => {
 
 export const sendEmailResetPass = async (email) => {
   try {
-    const { data } = await ecommerceApi.post("/session/change-password", {
-      email,
-      data,
-    });
+    await ecommerceApi.post("/session/forgot-password", { email });
     return { ok: true };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    return { 
+      ok: false, 
+      msg: error.response?.data?.msg || 'Error al enviar el correo de recuperación'
+    };
   }
 };
 
 export const resetPass = async (password, token) => {
   try {
-    const { data } = await ecommerceApi.post("/session/reset-password", {
+    await ecommerceApi.post("/session/reset-password", {
       password,
-      token,
-      data,
+      token
     });
     return { ok: true };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    return { 
+      ok: false, 
+      msg: error.response?.data?.msg || 'Error al restablecer la contraseña'
+    };
   }
 };
 
 export const deleteUser = async (_id) => {
   try {
-    const { data } = await ecommerceApi.post(`/session/delete-user/${_id}`);
-
-    return { ok: true, data };
+    const response = await ecommerceApi.delete(`/session/user/${_id}`);
+    
+    return { 
+      ok: true, 
+      data: response.data,
+      msg: response.data?.msg || 'Usuario eliminado correctamente'
+    };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    return { 
+      ok: false, 
+      status: error.response?.status,
+      data: error.response?.data,
+      msg: error.response?.data?.msg || 
+           error.response?.data?.message || 
+           'Error al eliminar el usuario. Por favor, intente nuevamente.'
+    };
   }
 };
 
 export const deleteInactiveUsers = async () => {
   try {
-    const { data } = await ecommerceApi.post(`/session/delete-users`);
+    const { data } = await ecommerceApi.delete('/session/inactive-users');
     return { ok: true, data };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    console.error('Error deleting inactive users:', error);
+    return { 
+      ok: false, 
+      msg: error.response?.data?.msg || 'Error al eliminar usuarios inactivos' 
+    };
   }
 };
 
