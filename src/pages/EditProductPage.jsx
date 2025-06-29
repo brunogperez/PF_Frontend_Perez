@@ -1,4 +1,4 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
+import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useProductStore } from '../hooks/useProductStore';
@@ -7,7 +7,6 @@ import { useState } from 'react';
 import { LoadingComponent } from '../components/LoadingComponent';
 
 export const EditProductPage = () => {
-
   const navigate = useNavigate();
   const { startUpdateProduct } = useProductStore();
   const { id } = useParams();
@@ -37,7 +36,7 @@ export const EditProductPage = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async values => {
       try {
         setLoading(true);
         const formData = new FormData();
@@ -71,21 +70,24 @@ export const EditProductPage = () => {
       <Grid
         container
         spacing={0}
-        direction='column'
-        alignItems='center'
+        direction="column"
+        alignItems="center"
         sx={{ minHeight: '100vh', backgroundColor: '#e7ebda' }}
       >
-        <Grid item sx={{ width: 450, backgroundColor: 'white', borderRadius: 2, padding: 3, mt: 3 }}>
-          <Typography variant='h5'>Editar Producto</Typography>
+        <Grid
+          item
+          sx={{ width: 450, backgroundColor: 'white', borderRadius: 2, padding: 3, mt: 3 }}
+        >
+          <Typography variant="h5">Editar Producto</Typography>
           <form onSubmit={formik.handleSubmit}>
             <Grid container>
               <Grid item mt={2} xs={12}>
                 <TextField
-                  name='title'
+                  name="title"
                   value={formik.values.title}
-                  label='Titulo'
-                  variant='outlined'
-                  size='small'
+                  label="Titulo"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.title && Boolean(formik.errors.title)}
@@ -93,14 +95,13 @@ export const EditProductPage = () => {
                 />
               </Grid>
 
-
               <Grid item mt={2} xs={12}>
                 <TextField
-                  name='description'
+                  name="description"
                   value={formik.values.description}
-                  label='Descripcion'
-                  variant='outlined'
-                  size='small'
+                  label="Descripcion"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.description && Boolean(formik.errors.description)}
@@ -110,11 +111,11 @@ export const EditProductPage = () => {
 
               <Grid item mt={2} xs={12}>
                 <TextField
-                  name='code'
+                  name="code"
                   value={formik.values.code}
-                  label='Codigo'
-                  variant='outlined'
-                  size='small'
+                  label="Codigo"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.code && Boolean(formik.errors.code)}
@@ -124,12 +125,12 @@ export const EditProductPage = () => {
 
               <Grid item mt={2} xs={12}>
                 <TextField
-                  type='number'
-                  name='price'
+                  type="number"
+                  name="price"
                   value={formik.values.price}
-                  label='Precio'
-                  variant='outlined'
-                  size='small'
+                  label="Precio"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.price && Boolean(formik.errors.price)}
@@ -139,12 +140,12 @@ export const EditProductPage = () => {
 
               <Grid item mt={2} xs={12}>
                 <TextField
-                  type='number'
-                  name='stock'
+                  type="number"
+                  name="stock"
                   value={formik.values.stock}
-                  label='Stock'
-                  variant='outlined'
-                  size='small'
+                  label="Stock"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.stock && Boolean(formik.errors.stock)}
@@ -154,11 +155,11 @@ export const EditProductPage = () => {
 
               <Grid item mt={2} xs={12}>
                 <TextField
-                  name='category'
+                  name="category"
                   value={formik.values.category}
-                  label='Categoria'
-                  variant='outlined'
-                  size='small'
+                  label="Categoria"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={formik.handleChange}
                   error={formik.touched.category && Boolean(formik.errors.category)}
@@ -168,29 +169,28 @@ export const EditProductPage = () => {
 
               {formik.values.thumbnail && (
                 <Grid item mt={2} xs={12}>
-                  <img src={formik.values.thumbnail} alt="Thumbnail" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />
+                  <img
+                    src={formik.values.thumbnail}
+                    alt="Thumbnail"
+                    style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }}
+                  />
                 </Grid>
               )}
 
               <Grid item mt={2} xs={12}>
                 <TextField
-                  type='file'
-                  name='file'
-                  label='Imagen'
-                  variant='outlined'
-                  size='small'
+                  type="file"
+                  name="file"
+                  label="Imagen"
+                  variant="outlined"
+                  size="small"
                   fullWidth
                   onChange={onFileChange}
                 />
               </Grid>
 
-
               <Grid item mt={2} xs={12}>
-                <Button
-                  type='submit'
-                  variant='contained'
-                  fullWidth
-                >
+                <Button type="submit" variant="contained" fullWidth>
                   Guardar Cambios
                 </Button>
               </Grid>

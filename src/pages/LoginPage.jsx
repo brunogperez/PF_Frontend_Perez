@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { 
-  Button, 
-  CircularProgress, 
-  TextField, 
-  Typography, 
-  Box, 
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+  Box,
   Checkbox,
   FormControlLabel,
 } from '@mui/material';
@@ -15,16 +15,17 @@ import { useAuthStore } from '../hooks/useAuthStore';
 import './LoginPage.css';
 
 export const LoginPage = () => {
-  
   const initialValues = {
     email: '',
     password: '',
-  }
+  };
 
   const validationSchema = Yup.object({
     email: Yup.string().required('El email es obligatorio').email('Email Invalido'),
-    password: Yup.string().required('La contraseña es obligatoria').min(6, 'La contraseña debe tener al menos 6 caracteres'),
-  })
+    password: Yup.string()
+      .required('La contraseña es obligatoria')
+      .min(6, 'La contraseña debe tener al menos 6 caracteres'),
+  });
 
   const [isLoading, setIsLoading] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -39,7 +40,7 @@ export const LoginPage = () => {
         setIsLoading(false);
         setSubmitting(false);
       }
-    }
+    },
   });
 
   const { email, password } = values;
@@ -60,7 +61,7 @@ export const LoginPage = () => {
           </svg>
           <Box className="dot-1" />
           <Box className="dot-2" />
-          
+
           <Box className="illustration-content">
             <Typography variant="h3" className="illustration-title">
               ¡Bienvenido de vuelta!
@@ -70,19 +71,19 @@ export const LoginPage = () => {
             </Typography>
           </Box>
         </Box>
-        
+
         <Box className="login-content">
           <Box className="login-header">
             <Typography variant="h4" className="login-title">
               Iniciar Sesión
             </Typography>
           </Box>
-          
+
           <Box component="form" className="login-form" onSubmit={handleSubmit}>
             <TextField
-              name='email'
+              name="email"
               value={email}
-              type='email'
+              type="email"
               label="Nombre de usuario o email"
               variant="outlined"
               fullWidth
@@ -92,14 +93,14 @@ export const LoginPage = () => {
               helperText={touched.email && errors.email}
               className="text-field"
               InputProps={{
-                sx: { fontSize: '0.95rem' }
+                sx: { fontSize: '0.95rem' },
               }}
             />
-            
+
             <TextField
-              name='password'
+              name="password"
               value={password}
-              type='password'
+              type="password"
               label="Contraseña"
               variant="outlined"
               fullWidth
@@ -109,16 +110,16 @@ export const LoginPage = () => {
               helperText={touched.password && errors.password}
               className="text-field"
               InputProps={{
-                sx: { fontSize: '0.95rem' }
+                sx: { fontSize: '0.95rem' },
               }}
             />
-            
+
             <Box className="login-options">
               <FormControlLabel
                 control={
                   <Checkbox
                     checked={rememberMe}
-                    onChange={(e) => setRememberMe(e.target.checked)}
+                    onChange={e => setRememberMe(e.target.checked)}
                     className="remember-me"
                   />
                 }
@@ -128,15 +129,12 @@ export const LoginPage = () => {
                   </Typography>
                 }
               />
-              
-              <Link 
-                to="/session/email" 
-                className="forgot-password"
-              >
+
+              <Link to="/session/email" className="forgot-password">
                 ¿Olvidaste tu contraseña?
               </Link>
             </Box>
-            
+
             <Button
               disabled={disabled || isLoading}
               variant="contained"
@@ -147,7 +145,7 @@ export const LoginPage = () => {
             >
               {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </Button>
-            
+
             <Box className="register-link-container">
               <Typography variant="body2" className="register-text">
                 ¿Nuevo aquí?{' '}
@@ -160,5 +158,5 @@ export const LoginPage = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};

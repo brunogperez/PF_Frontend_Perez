@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import { 
-  Button, 
-  CircularProgress, 
-  TextField, 
-  Typography, 
-  Box,
-  Grid,
-} from '@mui/material';
+import { Button, CircularProgress, TextField, Typography, Box, Grid } from '@mui/material';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -31,21 +24,19 @@ export const RegisterPage = () => {
     last_name: Yup.string()
       .required('El apellido es obligatorio')
       .min(3, 'El apellido debe tener al menos 3 caracteres'),
-    email: Yup.string()
-      .required('El email es obligatorio')
-      .email('Ingresa un email válido'),
+    email: Yup.string().required('El email es obligatorio').email('Ingresa un email válido'),
     password: Yup.string()
       .required('La contraseña es obligatoria')
       .min(8, 'La contraseña debe tener al menos 8 caracteres')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
         'La contraseña debe contener mayúsculas, minúsculas, números y caracteres especiales'
-      )
+      ),
   });
 
   const navigate = useNavigate();
   const { startRegister } = useAuthStore();
-  
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -58,22 +49,22 @@ export const RegisterPage = () => {
           first_name: true,
           last_name: true,
           email: true,
-          password: true
+          password: true,
         });
-        
+
         // Validate fields before submitting
         const errors = await formik.validateForm();
         if (Object.keys(errors).length > 0) {
           return; // Don't submit if there are validation errors
         }
-        
+
         const result = await startRegister(
-          values.email, 
-          values.password, 
-          values.first_name, 
+          values.email,
+          values.password,
+          values.first_name,
           values.last_name
         );
-        
+
         if (result && result.ok) {
           navigate('/');
         } else if (result && result.errors) {
@@ -90,9 +81,9 @@ export const RegisterPage = () => {
       } finally {
         setSubmitting(false);
       }
-    }
+    },
   });
-  
+
   const { isSubmitting, errors, touched, handleSubmit, handleChange, values } = formik;
   const { email, password, first_name, last_name } = values;
 
@@ -110,12 +101,12 @@ export const RegisterPage = () => {
               Completa los datos para crear tu cuenta
             </Typography>
           </Box>
-          
+
           <Box component="form" onSubmit={handleSubmit} className="register-form">
             <Box className="form-row">
               <Box className="form-field">
                 <TextField
-                  name='first_name'
+                  name="first_name"
                   value={first_name}
                   label="Nombre"
                   variant="outlined"
@@ -126,14 +117,14 @@ export const RegisterPage = () => {
                   autoComplete="off"
                   className="text-field"
                   InputProps={{
-                    sx: { fontSize: '0.95rem' }
+                    sx: { fontSize: '0.95rem' },
                   }}
                 />
               </Box>
-              
+
               <Box className="form-field">
                 <TextField
-                  name='last_name'
+                  name="last_name"
                   value={last_name}
                   label="Apellido"
                   variant="outlined"
@@ -144,16 +135,16 @@ export const RegisterPage = () => {
                   autoComplete="off"
                   className="text-field"
                   InputProps={{
-                    sx: { fontSize: '0.95rem' }
+                    sx: { fontSize: '0.95rem' },
                   }}
                 />
               </Box>
             </Box>
-            
+
             <TextField
-              name='email'
+              name="email"
               value={email}
-              type='email'
+              type="email"
               label="Correo electrónico"
               variant="outlined"
               fullWidth
@@ -163,15 +154,15 @@ export const RegisterPage = () => {
               autoComplete="off"
               className="text-field"
               InputProps={{
-                sx: { fontSize: '0.95rem' }
+                sx: { fontSize: '0.95rem' },
               }}
             />
-            
+
             <Box className="password-field-container">
               <TextField
-                name='password'
+                name="password"
                 value={password}
-                type='password'
+                type="password"
                 label="Contraseña"
                 variant="outlined"
                 fullWidth
@@ -185,31 +176,32 @@ export const RegisterPage = () => {
                     </Box>
                   ) : (
                     <Box component="span" sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
-                      La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales
+                      La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas,
+                      minúsculas, números y caracteres especiales
                     </Box>
                   )
                 }
                 autoComplete="off"
                 className="text-field"
                 InputProps={{
-                  sx: { 
+                  sx: {
                     fontSize: '0.95rem',
                     '&.Mui-error': {
                       '& fieldset': {
                         borderColor: '#d32f2f !important',
                       },
                     },
-                  }
+                  },
                 }}
                 FormHelperTextProps={{
                   sx: {
                     margin: '4px 0 0 0',
                     lineHeight: 1.2,
-                  }
+                  },
                 }}
               />
             </Box>
-            
+
             <Button
               disabled={isSubmitting || Object.keys(errors).length > 0}
               variant="contained"
@@ -225,15 +217,15 @@ export const RegisterPage = () => {
                 },
                 '&.Mui-disabled': {
                   backgroundColor: 'rgba(0, 0, 0, 0.12)',
-                  color: 'rgba(0, 0, 0, 0.26)'
-                }
+                  color: 'rgba(0, 0, 0, 0.26)',
+                },
               }}
             >
               {isSubmitting ? 'Creando cuenta...' : 'Crear Cuenta'}
             </Button>
-            
+
             {errors.submit && (
-              <Box 
+              <Box
                 sx={{
                   mt: 2,
                   p: 1.5,
@@ -242,7 +234,7 @@ export const RegisterPage = () => {
                   borderLeft: '4px solid #D32F2F',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 1
+                  gap: 1,
                 }}
               >
                 <ErrorOutlineIcon sx={{ color: '#D32F2F' }} />
@@ -251,7 +243,7 @@ export const RegisterPage = () => {
                 </Typography>
               </Box>
             )}
-            
+
             <Box className="login-link-container">
               <Typography variant="body2" className="login-text">
                 ¿Ya tienes cuenta?{' '}
@@ -262,7 +254,7 @@ export const RegisterPage = () => {
             </Box>
           </Box>
         </Box>
-        
+
         {/* Right Panel - Illustration */}
         <Box className="register-illustration">
           <Box className="circle-1" />
@@ -276,7 +268,7 @@ export const RegisterPage = () => {
           <Box className="dot-1" />
           <Box className="dot-2" />
           <Box className="dot-3" />
-          
+
           <Box className="illustration-content">
             <Typography variant="h3" className="illustration-title">
               ¡Únete a nosotros!
@@ -288,5 +280,5 @@ export const RegisterPage = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};

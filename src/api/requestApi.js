@@ -1,44 +1,44 @@
-import ecommerceApi from "./config";
+import ecommerceApi from './config';
 
 //SESSION
 
 export const loginUser = async (email, password) => {
   try {
-    const { data } = await ecommerceApi.post("/session/login", {
+    const { data } = await ecommerceApi.post('/session/login', {
       email,
       password,
     });
 
     const { token, user } = data;
-    
+
     if (!token) {
       return { ok: false, msg: 'No se recibió token de autenticación' };
     }
 
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     const { _id, first_name, last_name, role, cart_id } = user;
-    
-    return { 
-      ok: true, 
-      _id, 
-      first_name, 
-      last_name, 
-      role, 
+
+    return {
+      ok: true,
+      _id,
+      first_name,
+      last_name,
+      role,
       cart_id,
-      token
+      token,
     };
   } catch (error) {
-    return { 
-      ok: false, 
+    return {
+      ok: false,
       msg: error.response?.data?.msg || 'Error al iniciar sesión',
-      status: error.response?.status
+      status: error.response?.status,
     };
   }
 };
 
 export const registerUser = async (email, password, first_name, last_name) => {
   try {
-    const { data } = await ecommerceApi.post("/session/register", {
+    const { data } = await ecommerceApi.post('/session/register', {
       email,
       password,
       first_name,
@@ -46,17 +46,22 @@ export const registerUser = async (email, password, first_name, last_name) => {
     });
     const { token, user } = data;
     const { _id, role, cart_id } = user;
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     return { ok: true, _id, first_name, last_name, role, cart_id };
   } catch (error) {
     console.error('Error en registerUser:', error);
-    
+
     // Manejar diferentes formatos de respuesta de error
     let errorMessage = 'Error al registrar el usuario';
-    
+
     if (error.response) {
       // El servidor respondió con un estado de error
-      if (error.response.data && error.response.data.errors && Array.isArray(error.response.data.errors) && error.response.data.errors.length > 0) {
+      if (
+        error.response.data &&
+        error.response.data.errors &&
+        Array.isArray(error.response.data.errors) &&
+        error.response.data.errors.length > 0
+      ) {
         // Formato: { errors: [{ msg: 'mensaje de error' }] }
         errorMessage = error.response.data.errors[0].msg;
       } else if (error.response.data && error.response.data.message) {
@@ -74,7 +79,7 @@ export const registerUser = async (email, password, first_name, last_name) => {
       // La solicitud fue hecha pero no se recibió respuesta
       errorMessage = 'No se pudo conectar con el servidor';
     }
-    
+
     return { ok: false, msg: errorMessage };
   }
 };
@@ -85,32 +90,32 @@ export const validarToken = async () => {
     console.log('No token found in localStorage');
     return { ok: false, error: 'No token found' };
   }
-  
+
   try {
     console.log('Attempting to validate token...');
-    const { data } = await ecommerceApi.get("/session/renew");
-    
+    const { data } = await ecommerceApi.get('/session/renew');
+
     if (!data || !data.user) {
       console.error('Invalid response format from server:', data);
       return { ok: false, error: 'Invalid server response' };
     }
-    
+
     const { token: newToken, user } = data;
     const { _id, first_name, last_name, role, cart_id } = user;
-    
+
     // Only update token if a new one is provided
     if (newToken) {
-      localStorage.setItem("token", newToken);
+      localStorage.setItem('token', newToken);
       console.log('Token refreshed successfully');
     }
-    
-    return { 
-      ok: true, 
-      _id, 
-      first_name, 
-      last_name, 
-      role, 
-      cart_id 
+
+    return {
+      ok: true,
+      _id,
+      first_name,
+      last_name,
+      role,
+      cart_id,
     };
   } catch (error) {
     console.error('Error validating token:', {
@@ -120,24 +125,24 @@ export const validarToken = async () => {
       config: {
         url: error.config?.url,
         method: error.config?.method,
-        headers: error.config?.headers
-      }
+        headers: error.config?.headers,
+      },
     });
-    
+
     // Clear token on any error
     localStorage.removeItem('token');
-    
-    return { 
-      ok: false, 
+
+    return {
+      ok: false,
       error: error.response?.data?.message || 'Error de autenticación',
-      status: error.response?.status
+      status: error.response?.status,
     };
   }
 };
 
 export const getUsers = async () => {
   try {
-    const { data } = await ecommerceApi.get("/session/users");
+    const { data } = await ecommerceApi.get('/session/users');
     const { users } = data;
 
     return { ok: true, users };
@@ -146,50 +151,51 @@ export const getUsers = async () => {
   }
 };
 
-export const sendEmailResetPass = async (email) => {
+export const sendEmailResetPass = async email => {
   try {
-    await ecommerceApi.post("/session/forgot-password", { email });
+    await ecommerceApi.post('/session/forgot-password', { email });
     return { ok: true };
   } catch (error) {
-    return { 
-      ok: false, 
-      msg: error.response?.data?.msg || 'Error al enviar el correo de recuperación'
+    return {
+      ok: false,
+      msg: error.response?.data?.msg || 'Error al enviar el correo de recuperación',
     };
   }
 };
 
 export const resetPass = async (password, token) => {
   try {
-    await ecommerceApi.post("/session/reset-password", {
+    await ecommerceApi.post('/session/reset-password', {
       password,
-      token
+      token,
     });
     return { ok: true };
   } catch (error) {
-    return { 
-      ok: false, 
-      msg: error.response?.data?.msg || 'Error al restablecer la contraseña'
+    return {
+      ok: false,
+      msg: error.response?.data?.msg || 'Error al restablecer la contraseña',
     };
   }
 };
 
-export const deleteUser = async (_id) => {
+export const deleteUser = async _id => {
   try {
     const response = await ecommerceApi.delete(`/session/user/${_id}`);
-    
-    return { 
-      ok: true, 
+
+    return {
+      ok: true,
       data: response.data,
-      msg: response.data?.msg || 'Usuario eliminado correctamente'
+      msg: response.data?.msg || 'Usuario eliminado correctamente',
     };
   } catch (error) {
-    return { 
-      ok: false, 
+    return {
+      ok: false,
       status: error.response?.status,
       data: error.response?.data,
-      msg: error.response?.data?.msg || 
-           error.response?.data?.message || 
-           'Error al eliminar el usuario. Por favor, intente nuevamente.'
+      msg:
+        error.response?.data?.msg ||
+        error.response?.data?.message ||
+        'Error al eliminar el usuario. Por favor, intente nuevamente.',
     };
   }
 };
@@ -200,9 +206,9 @@ export const deleteInactiveUsers = async () => {
     return { ok: true, data };
   } catch (error) {
     console.error('Error deleting inactive users:', error);
-    return { 
-      ok: false, 
-      msg: error.response?.data?.msg || 'Error al eliminar usuarios inactivos' 
+    return {
+      ok: false,
+      msg: error.response?.data?.msg || 'Error al eliminar usuarios inactivos',
     };
   }
 };
@@ -213,16 +219,16 @@ export const switchRole = async (_id, newRole) => {
     return { ok: true, data };
   } catch (error) {
     console.error('Error en switchRole:', error);
-    return { 
-      ok: false, 
-      msg: error.response?.data?.msg || 'Error al cambiar el rol' 
+    return {
+      ok: false,
+      msg: error.response?.data?.msg || 'Error al cambiar el rol',
     };
   }
 };
 
 //PRODUCTS
 
-export const getProducts = async (pageProducts) => {
+export const getProducts = async pageProducts => {
   try {
     const { data } = await ecommerceApi.get(`/products?page=${pageProducts}`);
 
@@ -260,7 +266,7 @@ export const getProducts = async (pageProducts) => {
   }
 };
 
-export const getProductbyId = async (id) => {
+export const getProductbyId = async id => {
   try {
     const { data } = await ecommerceApi.get(`/products/${id}`);
 
@@ -272,16 +278,16 @@ export const getProductbyId = async (id) => {
   }
 };
 
-export const createProduct = async (producto) => {
+export const createProduct = async producto => {
   try {
-    const { data } = await ecommerceApi.post("/products", producto);
+    const { data } = await ecommerceApi.post('/products', producto);
     return { ok: true, producto: data.producto };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
   }
 };
 
-export const deleteProduct = async (idProduct) => {
+export const deleteProduct = async idProduct => {
   try {
     const { data } = await ecommerceApi.delete(`/products/${idProduct}`);
     return { ok: true, msg: data.msg };
@@ -301,7 +307,7 @@ export const updateProduct = async (id, values) => {
 
 //CARTS
 
-export const getCartById = async (id) => {
+export const getCartById = async id => {
   try {
     const { data } = await ecommerceApi.get(`/carts/${id}`);
 
@@ -313,9 +319,7 @@ export const getCartById = async (id) => {
 
 export const addProductInCart = async (idCart, idProduct) => {
   try {
-    const { data } = await ecommerceApi.post(
-      `/carts/${idCart}/product/${idProduct}`
-    );
+    const { data } = await ecommerceApi.post(`/carts/${idCart}/product/${idProduct}`);
     return { ok: true, cart: data.cart };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
@@ -324,10 +328,7 @@ export const addProductInCart = async (idCart, idProduct) => {
 
 export const removeProductInCart = async (idCart, idProduct, quantity) => {
   try {
-    const { data } = await ecommerceApi.put(
-      `/carts/${idCart}/product/${idProduct}`,
-      { quantity }
-    );
+    const { data } = await ecommerceApi.put(`/carts/${idCart}/product/${idProduct}`, { quantity });
     return { ok: true, cart: data.cart };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
@@ -336,9 +337,7 @@ export const removeProductInCart = async (idCart, idProduct, quantity) => {
 
 export const deleteProductInCart = async (idCart, idProduct) => {
   try {
-    const { data } = await ecommerceApi.delete(
-      `/carts/${idCart}/product/${idProduct}`
-    );
+    const { data } = await ecommerceApi.delete(`/carts/${idCart}/product/${idProduct}`);
     return { ok: true, cart: data.cart };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
@@ -347,7 +346,7 @@ export const deleteProductInCart = async (idCart, idProduct) => {
 
 export const confirmarCompra = async () => {
   try {
-    const { data } = await ecommerceApi.get("/session/renew");
+    const { data } = await ecommerceApi.get('/session/renew');
     const { user } = data;
     const { cart_id } = user;
     const { result } = await ecommerceApi.post(`/carts/${cart_id}/purchase`);
@@ -361,7 +360,7 @@ export const confirmarCompra = async () => {
 
 export const getTickets = async () => {
   try {
-    const { data } = await ecommerceApi.get("/tickets");
+    const { data } = await ecommerceApi.get('/tickets');
     return { ok: true, tickets: data.tickets };
   } catch (error) {
     return { ok: false };
@@ -372,17 +371,17 @@ export const getTickets = async () => {
 
 export const getMessages = async () => {
   try {
-    const { data } = await ecommerceApi.get("/chat");
+    const { data } = await ecommerceApi.get('/chat');
     return { ok: true, messages: data.messages };
   } catch (error) {
     return { ok: false };
   }
 };
 
-export const createMessage = async (message) => {
+export const createMessage = async message => {
   try {
-    const { data } = await ecommerceApi.post("/chat", message);
-    return { ok: true, message: data.message};
+    const { data } = await ecommerceApi.post('/chat', message);
+    return { ok: true, message: data.message };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };
   }
@@ -390,12 +389,10 @@ export const createMessage = async (message) => {
 
 //MERCADO PAGO
 
-export const referenceId = async (idCart) => {
+export const referenceId = async idCart => {
   try {
-    const { data } = await ecommerceApi.post(
-      `/carts/create-preference/${idCart}`
-    );
-    
+    const { data } = await ecommerceApi.post(`/carts/create-preference/${idCart}`);
+
     return { ok: true, idPreference: data.idPreference };
   } catch (error) {
     return { ok: false, msg: error.response.data.msg };

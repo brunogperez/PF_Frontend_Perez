@@ -1,51 +1,54 @@
-import { Box, Button, Grid } from '@mui/material'
-import { useProductStore } from '../hooks/useProductStore'
-import { CardItem } from './CardItem'
-import { useEffect, useState } from 'react'
-import { LoadingComponent } from './LoadingComponent'
-
+import { Box, Button, Grid } from '@mui/material';
+import { useProductStore } from '../hooks/useProductStore';
+import { CardItem } from './CardItem';
+import { useEffect, useState } from 'react';
+import { LoadingComponent } from './LoadingComponent';
 
 export const CardProducts = () => {
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const { products, pagination, startGetProducts } = useProductStore()
-  const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1);
+  const { products, pagination, startGetProducts } = useProductStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     startGetProducts(currentPage)
       .then(() => setLoading(false))
       .catch(() => setLoading(false));
-  }, [currentPage])
+  }, [currentPage]);
 
+  const goToPage = page => {
+    setCurrentPage(page);
+    setLoading(false);
+  };
 
-
-  const goToPage = (page) => {
-    setCurrentPage(page)
-    setLoading(false)
-  }
-
-
-  if (loading)
-    return <LoadingComponent />
-
+  if (loading) return <LoadingComponent />;
 
   return (
     <Box>
-      <Grid container spacing={5} alignItems='center' justifyContent='center' sx={{ paddingX: 20, paddingTop: 1, marginBlock: 1 }}>
-        {
-          products?.map(product => (
-            <Grid key={product._id} item xs={12} md={6} lg={3} style={{
+      <Grid
+        container
+        spacing={5}
+        alignItems="center"
+        justifyContent="center"
+        sx={{ paddingX: 20, paddingTop: 1, marginBlock: 1 }}
+      >
+        {products?.map(product => (
+          <Grid
+            key={product._id}
+            item
+            xs={12}
+            md={6}
+            lg={3}
+            style={{
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               marginBlock: 2,
-              width: '100%'
-            }}>
-              <CardItem {...product} />
-            </Grid>
-          ))
-        }
+              width: '100%',
+            }}
+          >
+            <CardItem {...product} />
+          </Grid>
+        ))}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
         {pagination && (
@@ -71,7 +74,5 @@ export const CardProducts = () => {
         )}
       </Box>
     </Box>
-  )
-}
-
-
+  );
+};

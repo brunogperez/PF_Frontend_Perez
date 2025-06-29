@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 export const ticketSlice = createSlice({
   name: 'ticket',
@@ -7,10 +7,9 @@ export const ticketSlice = createSlice({
   },
   reducers: {
     onTickets: (state, { payload }) => {
-      state.tickets = payload
-
+      state.tickets = payload;
     },
   },
-})
+});
 
-export const { onTickets } = ticketSlice.actions
+export const { onTickets } = ticketSlice.actions;

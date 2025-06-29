@@ -1,8 +1,5 @@
-import { AppRouter } from './router/AppRouter'
+import { AppRouter } from './router/AppRouter';
 
 export const EcommerceFront = () => {
-    return (
-        <AppRouter sx={{backgroundColor: '#4FB477'}}
-        />
-    )
-}
+  return <AppRouter sx={{ backgroundColor: '#4FB477' }} />;
+};

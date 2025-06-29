@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 export const messageSlice = createSlice({
-  name: "messages",
+  name: 'messages',
   initialState: {
     messages: [],
   },
@@ -10,7 +10,7 @@ export const messageSlice = createSlice({
       state.messages = payload;
     },
     addMessage: (state, { payload }) => {
-      state.messages = [payload, ...state.messages]; 
+      state.messages = [payload, ...state.messages];
     },
   },
 });

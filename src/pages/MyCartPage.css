@@ -85,7 +85,7 @@
   .cart-content {
     grid-template-columns: 3fr 1fr;
   }
-  
+
   .cart-items {
     padding: 0;
   }
@@ -96,7 +96,7 @@
     grid-template-columns: 1fr;
     max-width: 600px;
   }
-  
+
   .order-summary {
     margin-top: 2rem;
   }

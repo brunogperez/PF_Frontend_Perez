@@ -19,29 +19,31 @@ export const UsersPage = () => {
   return (
     <BackgroundWithSVG>
       <Container maxWidth="xl" sx={{ py: 4 }}>
-        <Box sx={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center',
-          mb: 4,
-          p: 3,
-          borderRadius: 2,
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          boxShadow: 2
-        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 4,
+            p: 3,
+            borderRadius: 2,
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            boxShadow: 2,
+          }}
+        >
           <Typography variant="h4" component="h1" color="primary">
             Gestión de Usuarios
           </Typography>
-          <Button 
-            variant="contained" 
-            color="secondary" 
+          <Button
+            variant="contained"
+            color="secondary"
             onClick={handleDeleteInactive}
             sx={{
               px: 3,
               py: 1,
               borderRadius: '10px',
               textTransform: 'none',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
             }}
           >
             <Typography variant="button" sx={{ color: 'white' }}>

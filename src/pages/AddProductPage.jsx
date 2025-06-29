@@ -1,17 +1,15 @@
-import { Button, Grid, TextField, Typography } from '@mui/material'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useProductStore } from '../hooks/useProductStore'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
-import { LoadingComponent } from '../components/LoadingComponent'
-import Swal from 'sweetalert2'
-
+import { Button, Grid, TextField, Typography } from '@mui/material';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useProductStore } from '../hooks/useProductStore';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { LoadingComponent } from '../components/LoadingComponent';
+import Swal from 'sweetalert2';
 
 export const AddProductPage = () => {
-
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     title: '',
@@ -21,7 +19,7 @@ export const AddProductPage = () => {
     stock: '',
     category: '',
     file: '',
-  }
+  };
 
   const validationSchema = Yup.object({
     title: Yup.string().required('El titulo es obligatorio'),
@@ -30,88 +28,101 @@ export const AddProductPage = () => {
     price: Yup.number().required('El precio es obligatorio'),
     stock: Yup.number().required('El precio es obligatorio'),
     category: Yup.string().required('El precio es obligatorio'),
-  })
+  });
 
-  const { values, handleChange, errors, setValues } = useFormik({ initialValues, validationSchema })
-  const { startCreateProduct } = useProductStore()
+  const { values, handleChange, errors, setValues } = useFormik({
+    initialValues,
+    validationSchema,
+  });
+  const { startCreateProduct } = useProductStore();
 
-  const { title, description, code, price, stock, category, file } = values
+  const { title, description, code, price, stock, category, file } = values;
 
-  const disabled = (title != '' && description != '' && code != '' && price != '' && stock != '' && category != '' && file != '') ? false : true
+  const disabled =
+    title != '' &&
+    description != '' &&
+    code != '' &&
+    price != '' &&
+    stock != '' &&
+    category != '' &&
+    file != ''
+      ? false
+      : true;
 
   const onSubmitForm = async () => {
     try {
-      setLoading(true)
-      const isEmpty = Object.keys(errors).length === 0
-      if (!isEmpty) return
+      setLoading(true);
+      const isEmpty = Object.keys(errors).length === 0;
+      if (!isEmpty) return;
 
-      const formData = new FormData()
-      formData.append('title', title)
-      formData.append('description', description)
-      formData.append('code', code)
-      formData.append('price', price)
-      formData.append('stock', stock)
-      formData.append('category', category)
-      formData.append('file', file)
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('code', code);
+      formData.append('price', price);
+      formData.append('stock', stock);
+      formData.append('category', category);
+      formData.append('file', file);
 
-      const success = await startCreateProduct(formData)
-
-
+      const success = await startCreateProduct(formData);
 
       if (success) {
-        setLoading(false)
+        setLoading(false);
 
         Swal.fire({
           title: 'Producto agregado con exito',
           icon: 'success',
-        })
-        navigate('/admin-product')
+        });
+        navigate('/admin-product');
       } else {
-        setLoading(false)
+        setLoading(false);
         Swal.fire({
           title: 'Error al agregar el producto',
           icon: 'error',
-        })
+        });
       }
     } catch (error) {
-
-      setLoading(false)
-
+      setLoading(false);
     }
-  }
+  };
 
   const onFileChange = ({ target }) => {
-    if (target.files === 0) return
+    if (target.files === 0) return;
     setValues({
       ...values,
       file: target.files[0],
-    })
-  }
+    });
+  };
 
-  if (loading)
-    return <LoadingComponent />
+  if (loading) return <LoadingComponent />;
 
   return (
     <>
       <Grid
         container
         spacing={0}
-        direction='column'
-        sx={{ height: '90vh', backgroundColor: 'white', alignContent: 'center', justifyContent: 'center' }}
+        direction="column"
+        sx={{
+          height: '90vh',
+          backgroundColor: 'white',
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}
       >
-
-        <Grid item sx={{ width: 450, backgroundColor: 'lightgrey', borderRadius: 2, padding: 3, mt: 3 }}>
-
-          <Typography variant='h5'>Crear Producto</Typography>
+        <Grid
+          item
+          sx={{ width: 450, backgroundColor: 'lightgrey', borderRadius: 2, padding: 3, mt: 3 }}
+        >
+          <Typography variant="h5">Crear Producto</Typography>
 
           <Grid container>
             <Grid item mt={2} xs={12}>
               <TextField
-                name='title'
+                name="title"
                 value={title}
-                label='Titulo'
-                variant='filled'
-                size='small'
+                label="Titulo"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.title)}
@@ -121,11 +132,11 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                name='description'
+                name="description"
                 value={description}
-                label='Descripcion'
-                variant='filled'
-                size='small'
+                label="Descripcion"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.description)}
@@ -135,11 +146,11 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                name='code'
+                name="code"
                 value={code}
-                label='Codigo'
-                variant='filled'
-                size='small'
+                label="Codigo"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.code)}
@@ -149,12 +160,12 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                type='number'
-                name='price'
+                type="number"
+                name="price"
                 value={price}
-                label='Precio'
-                variant='filled'
-                size='small'
+                label="Precio"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.price)}
@@ -164,12 +175,12 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                type='number'
-                name='stock'
+                type="number"
+                name="stock"
                 value={stock}
-                label='Stock'
-                variant='filled'
-                size='small'
+                label="Stock"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.stock)}
@@ -179,11 +190,11 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                name='category'
+                name="category"
                 value={category}
-                label='Categoria'
-                variant='filled'
-                size='small'
+                label="Categoria"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={handleChange}
                 error={Boolean(errors.category)}
@@ -193,29 +204,24 @@ export const AddProductPage = () => {
 
             <Grid item mt={2} xs={12}>
               <TextField
-                type='file'
-                name='file'
-                label='Imagen'
-                variant='filled'
-                size='small'
+                type="file"
+                name="file"
+                label="Imagen"
+                variant="filled"
+                size="small"
                 fullWidth
                 onChange={onFileChange}
               />
             </Grid>
 
             <Grid item mt={2} xs={12}>
-              <Button
-                disabled={disabled}
-                variant='contained'
-                onClick={onSubmitForm}
-                fullWidth>Crear Producto</Button>
+              <Button disabled={disabled} variant="contained" onClick={onSubmitForm} fullWidth>
+                Crear Producto
+              </Button>
             </Grid>
-
           </Grid>
-
         </Grid>
-
       </Grid>
     </>
-  )
-}
+  );
+};

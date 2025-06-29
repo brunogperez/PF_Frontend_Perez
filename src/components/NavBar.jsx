@@ -1,11 +1,11 @@
-import { 
-  AppBar, 
-  Toolbar, 
-  Typography, 
-  Button, 
-  IconButton, 
-  Badge, 
-  Box, 
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Badge,
+  Box,
   Avatar,
   Menu,
   MenuItem,
@@ -18,9 +18,9 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListItemButton
-} from '@mui/material'
-import { 
+  ListItemButton,
+} from '@mui/material';
+import {
   ShoppingCart as ShoppingCartIcon,
   Menu as MenuIcon,
   Home as HomeIcon,
@@ -29,72 +29,72 @@ import {
   SupervisorAccount as SupervisorAccountIcon,
   Inventory as InventoryIcon,
   Logout as LogoutIcon,
-  Login as LoginIcon
-} from '@mui/icons-material'
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../hooks/useAuthStore'
-import { useCartStore } from '../hooks/useCartStore'
-import { useState } from 'react'
+  Login as LoginIcon,
+} from '@mui/icons-material';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../hooks/useAuthStore';
+import { useCartStore } from '../hooks/useCartStore';
+import { useState } from 'react';
 
 export const NavBar = () => {
-  const theme = useTheme()
-  const navigate = useNavigate()
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  
-  const { first_name, status, isAdmin, startLogout } = useAuthStore()
-  const { cart } = useCartStore()
-  
-  const [anchorEl, setAnchorEl] = useState(null)
-  const [mobileOpen, setMobileOpen] = useState(false)
-  
-  const isMenuOpen = Boolean(anchorEl)
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+  const { first_name, status, isAdmin, startLogout } = useAuthStore();
+  const { cart } = useCartStore();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isMenuOpen = Boolean(anchorEl);
+
+  const handleProfileMenuOpen = event => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleMenuClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+    setMobileOpen(!mobileOpen);
+  };
 
   const onLogout = () => {
-    startLogout()
-    handleMenuClose()
-  }
+    startLogout();
+    handleMenuClose();
+  };
 
   const navigationItems = [
-    { 
-      label: 'Chat', 
-      path: '/chat', 
-      icon: <ChatIcon />, 
-      show: status === 'authenticated' 
+    {
+      label: 'Chat',
+      path: '/chat',
+      icon: <ChatIcon />,
+      show: status === 'authenticated',
     },
-    { 
-      label: 'Usuarios', 
-      path: '/users-page', 
-      icon: <SupervisorAccountIcon />, 
-      show: isAdmin 
+    {
+      label: 'Usuarios',
+      path: '/users-page',
+      icon: <SupervisorAccountIcon />,
+      show: isAdmin,
     },
-    { 
-      label: 'Productos', 
-      path: '/admin-product', 
-      icon: <InventoryIcon />, 
-      show: isAdmin 
-    }
-  ]
+    {
+      label: 'Productos',
+      path: '/admin-product',
+      icon: <InventoryIcon />,
+      show: isAdmin,
+    },
+  ];
 
   const userMenuItems = [
-    { 
-      label: 'Mis Compras', 
-      path: '/mis-compras', 
-      icon: <ReceiptIcon />, 
-      show: status === 'authenticated' 
-    }
-  ]
+    {
+      label: 'Mis Compras',
+      path: '/mis-compras',
+      icon: <ReceiptIcon />,
+      show: status === 'authenticated',
+    },
+  ];
 
   const renderMenu = (
     <Menu
@@ -116,7 +116,7 @@ export const NavBar = () => {
           mt: 1,
           minWidth: 200,
           boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
-        }
+        },
       }}
     >
       <Box sx={{ px: 2, py: 1.5 }}>
@@ -128,26 +128,28 @@ export const NavBar = () => {
         </Typography>
       </Box>
       <Divider />
-      {userMenuItems.filter(item => item.show).map((item) => (
-        <MenuItem
-          key={item.path}
-          onClick={() => {
-            navigate(item.path)
-            handleMenuClose()
-          }}
-          sx={{
-            py: 1.5,
-            '&:hover': {
-              backgroundColor: alpha(theme.palette.primary.main, 0.08)
-            }
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            {item.icon}
-            <Typography>{item.label}</Typography>
-          </Box>
-        </MenuItem>
-      ))}
+      {userMenuItems
+        .filter(item => item.show)
+        .map(item => (
+          <MenuItem
+            key={item.path}
+            onClick={() => {
+              navigate(item.path);
+              handleMenuClose();
+            }}
+            sx={{
+              py: 1.5,
+              '&:hover': {
+                backgroundColor: alpha(theme.palette.primary.main, 0.08),
+              },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {item.icon}
+              <Typography>{item.label}</Typography>
+            </Box>
+          </MenuItem>
+        ))}
       <Divider />
       <MenuItem
         onClick={onLogout}
@@ -155,8 +157,8 @@ export const NavBar = () => {
           py: 1.5,
           color: 'error.main',
           '&:hover': {
-            backgroundColor: alpha(theme.palette.error.main, 0.08)
-          }
+            backgroundColor: alpha(theme.palette.error.main, 0.08),
+          },
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -165,44 +167,40 @@ export const NavBar = () => {
         </Box>
       </MenuItem>
     </Menu>
-  )
+  );
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Box sx={{ p: 2 }}>
-        <img 
-          src="logo-digital-age.webp" 
-          alt="Logo" 
-          style={{ height: 50, objectFit: 'contain' }}
-        />
+        <img src="logo-digital-age.webp" alt="Logo" style={{ height: 50, objectFit: 'contain' }} />
       </Box>
       <Divider />
       <List>
-        {navigationItems.filter(item => item.show).map((item) => (
-          <ListItem key={item.path} disablePadding>
-            <ListItemButton
-              component={NavLink}
-              to={item.path}
-              sx={{
-                '&.active': {
-                  backgroundColor: alpha(theme.palette.primary.main, 0.12),
-                  color: 'primary.main',
-                  '& .MuiListItemIcon-root': {
-                    color: 'primary.main'
-                  }
-                }
-              }}
-            >
-              <ListItemIcon>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {navigationItems
+          .filter(item => item.show)
+          .map(item => (
+            <ListItem key={item.path} disablePadding>
+              <ListItemButton
+                component={NavLink}
+                to={item.path}
+                sx={{
+                  '&.active': {
+                    backgroundColor: alpha(theme.palette.primary.main, 0.12),
+                    color: 'primary.main',
+                    '& .MuiListItemIcon-root': {
+                      color: 'primary.main',
+                    },
+                  },
+                }}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          ))}
       </List>
     </Box>
-  )
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -213,52 +211,57 @@ export const NavBar = () => {
           background: 'linear-gradient(135deg,rgb(0, 0, 0) 0%,rgb(160, 53, 20) 100%)',
           borderBottom: `1px solid ${alpha('#000', 0.12)}`,
           position: 'relative',
-          zIndex: (theme) => theme.zIndex.drawer + 1,
+          zIndex: theme => theme.zIndex.drawer + 1,
         }}
       >
         <Toolbar sx={{ py: 1 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: { xs: 1, md: 0 } }}>
-            <NavLink to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+            <NavLink
+              to="/"
+              style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}
+            >
               <Box
                 component="img"
                 sx={{
                   height: 50,
-                  objectFit: "contain",
+                  objectFit: 'contain',
                 }}
-                alt='logo'
-                src='/logo-digital-age.webp'
+                alt="logo"
+                src="/logo-digital-age.webp"
               />
             </NavLink>
           </Box>
 
           {!isMobile && (
             <Box sx={{ display: 'flex', alignItems: 'center', ml: 4, flexGrow: 1 }}>
-              {navigationItems.filter(item => item.show).map((item) => (
-                <Button
-                  key={item.path}
-                  component={NavLink}
-                  to={item.path}
-                  startIcon={item.icon}
-                  sx={{
-                    color: 'white',
-                    fontWeight: 500,
-                    textTransform: 'none',
-                    mr: 1,
-                    px: 2,
-                    py: 1,
-                    borderRadius: '8px',
-                    '&:hover': {
-                      backgroundColor: alpha('#fff', 0.1),
-                    },
-                    '&.active': {
-                      backgroundColor: alpha('#fff', 0.2),
-                      fontWeight: 600,
-                    }
-                  }}
-                >
-                  {item.label}
-                </Button>
-              ))}
+              {navigationItems
+                .filter(item => item.show)
+                .map(item => (
+                  <Button
+                    key={item.path}
+                    component={NavLink}
+                    to={item.path}
+                    startIcon={item.icon}
+                    sx={{
+                      color: 'white',
+                      fontWeight: 500,
+                      textTransform: 'none',
+                      mr: 1,
+                      px: 2,
+                      py: 1,
+                      borderRadius: '8px',
+                      '&:hover': {
+                        backgroundColor: alpha('#fff', 0.1),
+                      },
+                      '&.active': {
+                        backgroundColor: alpha('#fff', 0.2),
+                        fontWeight: 600,
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
             </Box>
           )}
 
@@ -284,18 +287,18 @@ export const NavBar = () => {
                     color: 'white',
                     '&:hover': {
                       backgroundColor: alpha('#fff', 0.1),
-                    }
+                    },
                   }}
                 >
-                  <Badge 
-                    badgeContent={cart?.products?.length || 0} 
+                  <Badge
+                    badgeContent={cart?.products?.length || 0}
                     sx={{
                       '& .MuiBadge-badge': {
                         backgroundColor: '#FF5722',
                         color: 'white',
                         fontWeight: 600,
-                        fontSize: '0.75rem'
-                      }
+                        fontSize: '0.75rem',
+                      },
                     }}
                   >
                     <ShoppingCartIcon />
@@ -313,17 +316,17 @@ export const NavBar = () => {
                     ml: 1,
                     '&:hover': {
                       backgroundColor: alpha('#fff', 0.1),
-                    }
+                    },
                   }}
                 >
-                  <Avatar 
-                    sx={{ 
-                      width: 36, 
+                  <Avatar
+                    sx={{
+                      width: 36,
                       height: 36,
                       bgcolor: alpha('#fff', 0.2),
                       color: 'white',
                       fontSize: '1rem',
-                      fontWeight: 600
+                      fontWeight: 600,
                     }}
                   >
                     {first_name?.charAt(0)?.toUpperCase()}
@@ -346,7 +349,7 @@ export const NavBar = () => {
                   '&:hover': {
                     backgroundColor: alpha('#fff', 0.1),
                     borderColor: 'rgba(255,255,255,0.5)',
-                  }
+                  },
                 }}
               >
                 Ingresar
@@ -365,10 +368,10 @@ export const NavBar = () => {
         }}
         sx={{
           display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { 
-            boxSizing: 'border-box', 
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box',
             width: 240,
-            borderRadius: '0 12px 12px 0'
+            borderRadius: '0 12px 12px 0',
           },
         }}
       >
@@ -377,5 +380,5 @@ export const NavBar = () => {
 
       {renderMenu}
     </Box>
-  )
-}
+  );
+};

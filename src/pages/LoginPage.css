@@ -46,7 +46,7 @@
 
 .login-illustration {
   flex: 1;
-  background: linear-gradient(135deg, #aa5c44 0%, #FFB74D 100%);
+  background: linear-gradient(135deg, #aa5c44 0%, #ffb74d 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -72,7 +72,7 @@
 .login-illustration .circle-1 {
   width: 200px;
   height: 200px;
-  background-color: #FFB74D;
+  background-color: #ffb74d;
   border-radius: 50%;
   position: absolute;
   top: 20%;
@@ -84,7 +84,7 @@
 .login-illustration .circle-2 {
   width: 120px;
   height: 120px;
-  background-color: #FFCC02;
+  background-color: #ffcc02;
   border-radius: 50%;
   position: absolute;
   top: 10%;
@@ -96,7 +96,7 @@
 .login-illustration .circle-3 {
   width: 60px;
   height: 60px;
-  background-color: #FF7043;
+  background-color: #ff7043;
   border-radius: 50%;
   position: absolute;
   bottom: 15%;
@@ -108,7 +108,7 @@
 .login-illustration .shape-1 {
   width: 150px;
   height: 300px;
-  background-color: #42A5F5;
+  background-color: #42a5f5;
   border-radius: 75px;
   position: absolute;
   bottom: -50px;
@@ -132,7 +132,7 @@
 .login-illustration .dot-1 {
   width: 24px;
   height: 24px;
-  background-color: #FF9800;
+  background-color: #ff9800;
   border-radius: 50%;
   position: absolute;
   top: 30%;
@@ -144,7 +144,7 @@
 .login-illustration .dot-2 {
   width: 12px;
   height: 12px;
-  background-color: #FF9800;
+  background-color: #ff9800;
   border-radius: 50%;
   position: absolute;
   bottom: 40%;
@@ -203,15 +203,15 @@
 }
 
 .text-field .MuiOutlinedInput-root:hover fieldset {
-  border-color: #FF8A65;
+  border-color: #ff8a65;
 }
 
 .text-field .MuiOutlinedInput-root.Mui-focused fieldset {
-  border-color: #FF8A65;
+  border-color: #ff8a65;
 }
 
 .text-field .MuiInputLabel-root.Mui-focused {
-  color: #FF8A65;
+  color: #ff8a65;
 }
 
 .login-options {
@@ -233,13 +233,13 @@
   font-size: 1rem;
   font-weight: 600;
   text-transform: none;
-  background: linear-gradient(135deg, #FF8A65 0%, #FF7043 100%);
+  background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%);
   box-shadow: 0 8px 24px rgba(255, 138, 101, 0.4);
   transition: all 0.3s ease;
 }
 
 .login-button:hover {
-  background: linear-gradient(135deg, #FF7043 0%, #FF5722 100%);
+  background: linear-gradient(135deg, #ff7043 0%, #ff5722 100%);
   box-shadow: 0 12px 32px rgba(255, 138, 101, 0.5);
   transform: translateY(-2px);
 }
@@ -257,7 +257,7 @@
 }
 
 .register-link {
-  color: #FF8A65;
+  color: #ff8a65;
   text-decoration: none;
   font-weight: 600;
 }
@@ -267,7 +267,7 @@
   .login-illustration {
     display: flex;
   }
-  
+
   .login-content {
     padding: 48px 80px;
   }
