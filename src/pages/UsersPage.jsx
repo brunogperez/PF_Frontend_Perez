@@ -31,7 +31,7 @@ export const UsersPage = () => {
             boxShadow: 2,
           }}
         >
-          <Typography variant="h4" component="h1" color="primary">
+          <Typography variant="h4" component="h1" color="white">
             Gestión de Usuarios
           </Typography>
           <Button

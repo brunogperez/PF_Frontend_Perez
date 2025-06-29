@@ -19,6 +19,8 @@ import {
   Rating,
   Skeleton,
 } from '@mui/material';
+import { useTheme, alpha } from '@mui/material/styles';
+import Swal from 'sweetalert2';
 import {
   Add as AddIcon,
   Remove as RemoveIcon,
@@ -38,7 +40,9 @@ import { useAuthStore } from '../hooks/useAuthStore';
 import './ProductPage.css';
 
 export const ProductPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
+  const theme = useTheme();
   const { isAdmin } = useAuthStore();
   const { '*': productId } = useParams();
   const { product, startGetProductById } = useProductStore();
@@ -68,9 +72,40 @@ export const ProductPage = () => {
     }
   };
 
-  const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      startAddProductInCart(product._id);
+  const handleAddToCart = async () => {
+    try {
+      for (let i = 0; i < quantity; i++) {
+        const result = await startAddProductInCart(product._id);
+        if (!result.ok) {
+          // If adding to cart fails, show error and stop
+          if (result.msg) {
+            Swal.fire({
+              title: 'Error',
+              text: result.msg,
+              icon: 'error',
+            });
+          }
+          return;
+        }
+      }
+      
+      // Show success message only if we added at least one item
+      if (quantity > 0) {
+        Swal.fire({
+          title: '¡Producto agregado!',
+          text: `Se agregó ${quantity} ${quantity === 1 ? 'producto' : 'productos'} al carrito`,
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Ocurrió un error al agregar el producto al carrito',
+        icon: 'error',
+      });
     }
   };
 

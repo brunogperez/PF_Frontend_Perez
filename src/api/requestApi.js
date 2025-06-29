@@ -344,6 +344,15 @@ export const deleteProductInCart = async (idCart, idProduct) => {
   }
 };
 
+export const clearCart = async idCart => {
+  try {
+    const { data } = await ecommerceApi.delete(`/carts/${idCart}`);
+    return { ok: true, cart: data.cart };
+  } catch (error) {
+    return { ok: false, msg: error.response?.data?.msg || 'Error al vaciar el carrito' };
+  }
+};
+
 export const confirmarCompra = async () => {
   try {
     const { data } = await ecommerceApi.get('/session/renew');
@@ -383,7 +392,7 @@ export const createMessage = async message => {
     const { data } = await ecommerceApi.post('/chat', message);
     return { ok: true, message: data.message };
   } catch (error) {
-    return { ok: false, msg: error.response.data.msg };
+    return { ok: false, msg: error.response?.data?.msg || 'Error al crear mensaje' };
   }
 };
 

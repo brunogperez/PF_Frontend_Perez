@@ -26,7 +26,9 @@ export const useAuthStore = () => {
     try {
       const resp = await loginUser(email, password);
       if (resp.ok) {
-        const { _id, cart_id, last_name, first_name, role } = resp;
+        const { _id, cart_id, last_name, first_name, role, token } = resp;
+        // Store token in localStorage
+        localStorage.setItem('token', token);
         // First update the auth state
         dispatch(onLogin({ _id, cart_id, last_name, first_name, role }));
         // Then load the cart if cart_id exists
@@ -72,6 +74,12 @@ export const useAuthStore = () => {
     let loginSuccessful = false;
 
     try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No token found in localStorage');
+        return { ok: false, error: 'No token found' };
+      }
+
       const resp = await validarToken();
 
       if (resp.ok) {

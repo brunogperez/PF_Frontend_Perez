@@ -1,4 +1,5 @@
 import { useAuthStore } from '../hooks/useAuthStore';
+import Swal from 'sweetalert2';
 import {
   Box,
   CardContent,
@@ -23,7 +24,42 @@ export const UserItem = ({ _id, first_name, last_name, role, email }) => {
 
   const onDeleteUser = async e => {
     e.stopPropagation();
-    await startDeleteUser(_id);
+    
+    const result = await Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Deseas eliminar al usuario ${first_name} ${last_name}? Esta acción no se puede deshacer.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const result = await startDeleteUser(_id);
+        
+        if (result === true) {
+          Swal.fire({
+            title: '¡Eliminado!',
+            text: `El usuario ${first_name} ${last_name} ha sido eliminado.`,
+            icon: 'success',
+            timer: 1500,
+            showConfirmButton: false
+          });
+        } else {
+          throw new Error('No se pudo eliminar el usuario');
+        }
+      } catch (error) {
+        Swal.fire({
+          title: 'Error',
+          text: error.message || 'No se pudo eliminar el usuario',
+          icon: 'error'
+        });
+      }
+    }
   };
 
   const onSwitchRole = async (newRole, e) => {

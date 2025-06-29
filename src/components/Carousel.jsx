@@ -50,13 +50,13 @@ export const Carousel = () => {
         />
       </motion.div>
       <IconButton
-        sx={{ position: 'absolute', top: '50%', left: 20, transform: 'translateY(-50%)' }}
+        sx={{ position: 'absolute', top: '50%', left: 20, transform: 'translateY(-50%)', color: 'white' }}
         onClick={handlePrev}
       >
         <ArrowBackIosIcon />
       </IconButton>
       <IconButton
-        sx={{ position: 'absolute', top: '50%', right: 20, transform: 'translateY(-50%)' }}
+        sx={{ position: 'absolute', top: '50%', right: 20, transform: 'translateY(-50%)', color: 'white' }}
         onClick={handleNext}
       >
         <ArrowForwardIosIcon />
